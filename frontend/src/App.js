@@ -55,14 +55,18 @@ class App extends Component {
         .then(result => {
           console.log(result)
           let user = JSON.parse(result)
+          console.log("user", user);
           let auth = {
             id: user.id,
             username: user.username,
             password: user.password,
+            fullname: user.fullName,
+            email: user.email,
+            photo: user.photo,
             roles: user.roles
           }
           this.props.setAuth(auth);
-          this.props.setCart([])
+          this.props.setCart([]);
         })
         .catch(error => console.log('error', error));
     }
