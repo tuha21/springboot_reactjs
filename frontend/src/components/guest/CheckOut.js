@@ -55,7 +55,10 @@ class CheckOut extends Component {
                         .catch(error => console.log('error', error));
                 }
             })
-            .catch(error => console.log('error', error));
+            .catch(error => console.log('error', error))
+            .finally(() => {
+                alert("Đặt hành thành công!")
+            });
 
         // GuestService.order({
         //     id: "",
