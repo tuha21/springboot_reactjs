@@ -57,6 +57,7 @@ public class LoginController {
 				.map(authority -> authority.getRole().getId())
 				.collect(Collectors.toList());
 		Profile profile = new Profile();
+		profile.setId(account.getId());
 		profile.setFullName(account.getFullname());
 		profile.setUsername(account.getUsername());
 		profile.setPhoto(account.getPhoto());
