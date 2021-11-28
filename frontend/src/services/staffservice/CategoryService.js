@@ -3,8 +3,8 @@ class CategoryService {
 
   findAll = (auth) => {
     var myHeaders = new Headers();
-    var token = base64.encode(auth.username + ":" + auth.password)
-    myHeaders.append("Authorization", "Basic " + token);
+    var token = localStorage.getItem('token')
+    myHeaders.append("Authorization", "Bearer " + token);
     myHeaders.append("Content-Type", "application/json");
     var requestOptions = {
       method: 'GET',
@@ -18,8 +18,8 @@ class CategoryService {
 
   findById = (id, auth) => {
     var myHeaders = new Headers();
-    var token = base64.encode(auth.username + ":" + auth.password)
-    myHeaders.append("Authorization", "Basic " + token);
+    var token = localStorage.getItem('token')
+    myHeaders.append("Authorization", "Bearer " + token);
     myHeaders.append("Content-Type", "application/json");
     var requestOptions = {
       method: 'GET',

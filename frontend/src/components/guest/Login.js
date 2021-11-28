@@ -1,7 +1,7 @@
 import { Component } from "react"
 import LoginService from "../../services/loginservice/LoginService";
 import * as action from "../../actions";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 class Login extends Component {
 
@@ -49,16 +49,32 @@ class Login extends Component {
                 return response.text();
             })
             .then(result => {
-                console.log(result)
-                let user = JSON.parse(result)
-                let auth = {
-                    id: user.id,
-                    username: user.username,
-                    password: user.password,
-                    roles: user.roles
-                }
-                this.props.setAuth(auth);
-                this.props.setCart([])
+                localStorage.setItem('token', result)
+                var myHeaders = new Headers();
+                myHeaders.append("Authorization", "Bearer " + result);
+                myHeaders.append("Cookie", "JSESSIONID=C6B69B1366935F0C4E7CCAC8732291BA");
+
+                var requestOptions = {
+                    method: 'GET',
+                    headers: myHeaders,
+                    redirect: 'follow'
+                };
+
+                fetch("http://localhost:8080/getProfile", requestOptions)
+                    .then(response => response.text())
+                    .then(result => {
+                        console.log(result)
+                        let user = JSON.parse(result)
+                        let auth = {
+                            id: user.id,
+                            username: user.username,
+                            password: user.password,
+                            roles: user.roles
+                        }
+                        this.props.setAuth(auth);
+                        this.props.setCart([])
+                    })
+                    .catch(error => console.log('error', error));
             })
             .catch(error => console.log('error', error));
     }
@@ -99,7 +115,7 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        auth : state.auth
+        auth: state.auth
     }
 }
 
@@ -114,4 +130,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

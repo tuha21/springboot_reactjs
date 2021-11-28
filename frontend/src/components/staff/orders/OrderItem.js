@@ -9,7 +9,8 @@ export default class OrderItem extends Component {
 
         if (confirm) {
             var myHeaders = new Headers();
-            myHeaders.append("Authorization", "Basic YWRtaW46MTIz");
+            var token = localStorage.getItem('token')
+            myHeaders.append("Authorization", "Bearer " + token);
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Cookie", "JSESSIONID=93F3A27A52519A25A145DEFBFA4CD4C2");
 
