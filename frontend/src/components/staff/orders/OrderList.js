@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import OrderItem from './OrderItem'
-
+let base64 = require("base-64")
 export default class OrderList extends Component {
 
     constructor(props) {
@@ -16,7 +16,8 @@ export default class OrderList extends Component {
 
     getAllOrder = () => {
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Basic c3RhZmY6MTIz");
+        var token = base64.encode("admin" + ":" + "admin")
+        myHeaders.append("Authorization", "Basic " + token);
         myHeaders.append("Cookie", "JSESSIONID=93F3A27A52519A25A145DEFBFA4CD4C2");
 
         var requestOptions = {

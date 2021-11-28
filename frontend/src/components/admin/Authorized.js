@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Authority from './Authority'
+let base64 = require("base-64")
 export default class Authorized extends Component {
 
     constructor(props) {
@@ -19,7 +20,8 @@ export default class Authorized extends Component {
 
     getAuthorities = () => {
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Basic YWRtaW46MTIz");
+        var token = base64.encode("admin" + ":" + "admin")
+        myHeaders.append("Authorization", "Basic " + token);
         myHeaders.append("Cookie", "JSESSIONID=2E50729D00996EAE78D40069E5E98065");
 
         var requestOptions = {
@@ -41,7 +43,7 @@ export default class Authorized extends Component {
 
     getAccount = () => {
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Basic YWRtaW46MTIz");
+        var token = base64.encode("admin" + ":" + "admin")
         myHeaders.append("Cookie", "JSESSIONID=2E50729D00996EAE78D40069E5E98065");
 
         var requestOptions = {
@@ -62,7 +64,7 @@ export default class Authorized extends Component {
 
     getRole = () => {
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Basic YWRtaW46MTIz");
+        var token = base64.encode("admin" + ":" + "admin")
         myHeaders.append("Cookie", "JSESSIONID=2E50729D00996EAE78D40069E5E98065");
 
         var requestOptions = {
@@ -83,7 +85,7 @@ export default class Authorized extends Component {
 
     addAuthor = (acc, role) => {
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Basic YWRtaW46MTIz");
+        var token = base64.encode("admin" + ":" + "admin")
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", "JSESSIONID=2E50729D00996EAE78D40069E5E98065");
 
@@ -112,7 +114,7 @@ export default class Authorized extends Component {
 
     removeAuthor = (id) => {
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Basic YWRtaW46MTIz");
+        var token = base64.encode("admin" + ":" + "admin")
         myHeaders.append("Cookie", "JSESSIONID=2E50729D00996EAE78D40069E5E98065");
 
         var requestOptions = {
