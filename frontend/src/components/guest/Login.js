@@ -66,12 +66,14 @@ class Login extends Component {
                         console.log(result)
                         let user = JSON.parse(result)
                         let auth = {
-                            id: user.id,
                             username: user.username,
-                            password: user.password,
+                            fullName: user.fullName,
+                            email: user.email,
+                            photo: user.photo,
                             roles: user.roles
                         }
                         this.props.setAuth(auth);
+                        console.log("auth",auth);
                         this.props.setCart([])
                     })
                     .catch(error => console.log('error', error));

@@ -143,7 +143,7 @@ function Dashboard(props) {
             <div className="col-6 d-flex justify-content-end">
               <img src="https://static-s.aa-cdn.net/img/ios/1109277833/0df781f42d16c739d841831e462bc99e" width="30" height="30" className="d-inline-block align-top mx-2" alt="avatar" style={{borderRadius: '50px', border: '1px solid'}} />
               <Typography variant="h5" noWrap>
-                {auth.username}
+                {auth.fullName}
               </Typography>
             </div>
           </div>
