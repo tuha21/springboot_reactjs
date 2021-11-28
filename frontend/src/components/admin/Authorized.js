@@ -20,8 +20,8 @@ export default class Authorized extends Component {
 
     getAuthorities = () => {
         var myHeaders = new Headers();
-        var token = base64.encode("admin" + ":" + "admin")
-        myHeaders.append("Authorization", "Basic " + token);
+        var token = localStorage.getItem('token')
+        myHeaders.append("Authorization", "Bearer " + token);
         myHeaders.append("Cookie", "JSESSIONID=2E50729D00996EAE78D40069E5E98065");
 
         var requestOptions = {
@@ -43,8 +43,8 @@ export default class Authorized extends Component {
 
     getAccount = () => {
         var myHeaders = new Headers();
-        var token = base64.encode("admin" + ":" + "admin")
-        myHeaders.append("Authorization", "Basic " + token);
+        var token = localStorage.getItem('token')
+        myHeaders.append("Authorization", "Bearer " + token);
         myHeaders.append("Cookie", "JSESSIONID=2E50729D00996EAE78D40069E5E98065");
 
         var requestOptions = {
@@ -65,8 +65,8 @@ export default class Authorized extends Component {
 
     getRole = () => {
         var myHeaders = new Headers();
-        var token = base64.encode("admin" + ":" + "admin")
-        myHeaders.append("Authorization", "Basic " + token);
+        var token = localStorage.getItem('token')
+        myHeaders.append("Authorization", "Bearer " + token);
         myHeaders.append("Cookie", "JSESSIONID=2E50729D00996EAE78D40069E5E98065");
 
         var requestOptions = {
@@ -87,8 +87,8 @@ export default class Authorized extends Component {
 
     addAuthor = (acc, role) => {
         var myHeaders = new Headers();
-        var token = base64.encode("admin" + ":" + "admin")
-        myHeaders.append("Authorization", "Basic " + token);
+        var token = localStorage.getItem('token')
+        myHeaders.append("Authorization", "Bearer " + token);
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", "JSESSIONID=2E50729D00996EAE78D40069E5E98065");
 
@@ -117,8 +117,8 @@ export default class Authorized extends Component {
 
     removeAuthor = (id) => {
         var myHeaders = new Headers();
-        var token = base64.encode("admin" + ":" + "admin")
-        myHeaders.append("Authorization", "Basic " + token);
+        var token = localStorage.getItem('token')
+        myHeaders.append("Authorization", "Bearer " + token);
         myHeaders.append("Cookie", "JSESSIONID=2E50729D00996EAE78D40069E5E98065");
 
         var requestOptions = {

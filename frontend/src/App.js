@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom'
 import Cart from './components/guest/Cart'
 import CheckOut from './components/guest/CheckOut'
 import Collection from './components/guest/Collection'
@@ -10,7 +10,7 @@ import NavTop from './components/guest/NavTop'
 import ProductDetail from './components/guest/ProductDetail'
 import Dashboard from './components/staff/Dashboard'
 import MyOrders from "./components/guest/MyOrders";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import * as action from "./actions/index"
 
 class App extends Component {
@@ -19,28 +19,62 @@ class App extends Component {
     super(props);
   }
 
+  componentDidMount = () => {
+    this.getProfile();
+  }
 
   isAdmin = (roles) => {
-    if(roles && roles.includes(1)){
+    if (roles && roles.includes(1)) {
       return true;
     }
     else return false
   }
 
   isStaff = (roles) => {
-    if(roles &&roles.includes(2)){
+    if (roles && roles.includes(2)) {
       return true;
     }
     else return false
   }
 
+
+  getProfile = () => {
+    if (localStorage.getItem('token')) {
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + localStorage.getItem('token'));
+      myHeaders.append("Cookie", "JSESSIONID=C6B69B1366935F0C4E7CCAC8732291BA");
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch("http://localhost:8080/getProfile", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+          console.log(result)
+          let user = JSON.parse(result)
+          let auth = {
+            id: user.id,
+            username: user.username,
+            password: user.password,
+            roles: user.roles
+          }
+          this.props.setAuth(auth);
+          this.props.setCart([])
+        })
+        .catch(error => console.log('error', error));
+    }
+  }
+
   render() {
 
-    let {auth} = this.props;
+    let { auth } = this.props;
     return (
       <Router>
         <Route path="/mexxi">
-          <NavTop isStaff={this.isStaff} isAdmin={this.isAdmin} auth={auth}/>
+          <NavTop isStaff={this.isStaff} isAdmin={this.isAdmin} auth={auth} />
           <Route exact path="/mexxi">
             <Home />
           </Route>
@@ -54,23 +88,23 @@ class App extends Component {
             <Cart />
           </Route>
           <Route exact path="/mexxi/login">
-            <Login setRole={this.setRole}/>
+            <Login setRole={this.setRole} />
           </Route>
           <Route exact path="/mexxi/checkout">
             {
-              auth === null ? <Redirect to="/mexxi/login" /> : <CheckOut/>
+              auth === null ? <Redirect to="/mexxi/login" /> : <CheckOut />
             }
           </Route>
           <Route exact path="/mexxi/myorder">
             {
-              auth === null ? <Redirect to="/mexxi/login" /> : <MyOrders/>
+              auth === null ? <Redirect to="/mexxi/login" /> : <MyOrders />
             }
           </Route>
           <NavBot />
         </Route>
         <Route path="/staff">
           {
-            auth !== null && (this.isAdmin(auth.roles) || this.isStaff(auth.roles))  ? <Dashboard auth={this.props.auth}/> :<Redirect to="/mexxi/login" />
+            auth !== null && (this.isAdmin(auth.roles) || this.isStaff(auth.roles)) ? <Dashboard auth={this.props.auth} /> : <Redirect to="/mexxi/login" />
           }
         </Route>
       </Router>
@@ -80,7 +114,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    auth : state.auth
+    auth: state.auth
   }
 }
 

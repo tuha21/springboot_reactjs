@@ -1,5 +1,6 @@
 package com.fpt.service;
 
+import com.fpt.dto.CustomUserDetail;
 import com.fpt.entity.Account;
 import com.fpt.repo.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,30 +17,14 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService{
 
 	@Autowired
-	BCryptPasswordEncoder be;
-	
-	@Autowired
 	AccountRepo accountRepo;
-	
-	@Autowired
-	AccountService accountService;
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		try {
-			Account account = this.accountService.findActiveByUsername(username);
-			String password = account.getPassword();
-			String[] roles = account.getAuthorities().stream()
-					.map(au -> au.getRole().getName())
-					.collect(Collectors.toList()).toArray(new String[0]);
-			return User.withUsername(username)
-					.password(be.encode(password))
-					.roles(roles)
-					.build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new UsernameNotFoundException("Not found account: " + username);
+		Account account = this.accountRepo.findByUsername(username);
+		if(account == null) {
+			throw  new UsernameNotFoundException(username);
 		}
+		return new CustomUserDetail(account);
 	}
-
 }

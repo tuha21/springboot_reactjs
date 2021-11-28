@@ -71,8 +71,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> findByAccount(String username, String password) {
-        Optional<Account> account = Optional.ofNullable(this.accountRepo.findByUsernameAndPassword(username, password));
+    public List<OrderDTO> findByAccount(String username) {
+        Optional<Account> account = Optional.ofNullable(this.accountRepo.findByUsername(username));
         if(account.isPresent()) {
             List<Order> list = this.orderRepo.findByAccount(account.get());
             return list.stream()

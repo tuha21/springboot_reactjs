@@ -5,8 +5,8 @@ class MyOrdersService {
     findAll = (username, password) => {
         let myHeaders = new Headers();
         myHeaders.append("Cookie", "JSESSIONID=32AA9655D2E2801D58EBE81A961C4AE6");
-        var token = base64.encode(username + ":" + password)
-        myHeaders.append("Authorization", "Basic " + token);
+        var token = localStorage.getItem('token')
+        myHeaders.append("Authorization", "Bearer " + token);
         let requestOptions = {
             method: 'GET',
             headers: myHeaders,
@@ -20,8 +20,8 @@ class MyOrdersService {
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", "JSESSIONID=32AA9655D2E2801D58EBE81A961C4AE6");
-        var token = base64.encode(username + ":" + password)
-        myHeaders.append("Authorization", "Basic " + token);
+        var token = localStorage.getItem('token')
+        myHeaders.append("Authorization", "Bearer " + token);
         let raw = JSON.stringify(order);
 
         let requestOptions = {
@@ -55,8 +55,8 @@ class MyOrdersService {
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Cookie", "JSESSIONID=32AA9655D2E2801D58EBE81A961C4AE6");
-        var token = base64.encode(username + ":" + password)
-        myHeaders.append("Authorization", "Basic " + token);
+        var token = localStorage.getItem('token')
+        myHeaders.append("Authorization", "Bearer " + token);
 
         var raw = JSON.stringify(order);
         var requestOptions = {

@@ -5,8 +5,8 @@ class ProductService {
 
     findAll = (page, status, auth) => {
         var myHeaders = new Headers();
-        var token = base64.encode(auth.username + ":" + auth.password)
-        myHeaders.append("Authorization", "Basic " + token);
+        var token = localStorage.getItem('token')
+        myHeaders.append("Authorization", "Bearer " + token);
         var requestOptions = {
             method: 'GET',
             headers: myHeaders,
@@ -17,8 +17,8 @@ class ProductService {
 
     changeStatus = (product, auth) => {
         var myHeaders = new Headers();
-        var token = base64.encode(auth.username + ":" + auth.password)
-        myHeaders.append("Authorization", "Basic " + token);
+        var token = localStorage.getItem('token')
+        myHeaders.append("Authorization", "Bearer " + token);
         myHeaders.append("Content-Type", "application/json");
         product.status = Number(!product.status)
         var raw = JSON.stringify(product);
@@ -33,8 +33,8 @@ class ProductService {
 
     addProduct = (product, auth) => {
         var myHeaders = new Headers();
-        var token = base64.encode(auth.username + ":" + auth.password)
-        myHeaders.append("Authorization", "Basic " + token);
+        var token = localStorage.getItem('token')
+        myHeaders.append("Authorization", "Bearer " + token);
         myHeaders.append("Content-Type", "application/json");
         var raw = JSON.stringify(product);
         var requestOptions = {
@@ -49,8 +49,8 @@ class ProductService {
 
     updateProduct = (product, auth) => {
         var myHeaders = new Headers();
-        var token = base64.encode(auth.username + ":" + auth.password)
-        myHeaders.append("Authorization", "Basic " + token);
+        var token = localStorage.getItem('token')
+        myHeaders.append("Authorization", "Bearer " + token);
         myHeaders.append("Content-Type", "application/json");
         var raw = JSON.stringify(product);
         var requestOptions = {

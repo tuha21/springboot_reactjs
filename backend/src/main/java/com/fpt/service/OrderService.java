@@ -17,5 +17,5 @@ public interface OrderService{
 
     public OrderDTO delete(Integer id);
 
-    public List<OrderDTO> findByAccount(String username, String password);
+    public List<OrderDTO> findByAccount(String username);
 }
