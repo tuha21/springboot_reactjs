@@ -19,6 +19,8 @@ public interface ProductDetailService {
 
     List<ProductDetailDTO> findByProductIdAndColorAndSize(Product productId, String color, String size);
 
+    ProductDetailDTO findById(Integer id);
+
     ProductDetailDTO create(ProductDetailDTO dto);
 
     ProductDetailDTO update(ProductDetailDTO dto);

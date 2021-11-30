@@ -6,7 +6,6 @@ import com.fpt.mapper.ProductDetailMapper;
 import com.fpt.repo.ProductDetailRepo;
 import com.fpt.repo.ProductRepo;
 import com.fpt.service.ProductDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -63,6 +62,11 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         return productDetailRepo.findByProductIdAndColorAndSize(productId, color, size).stream()
                 .map(productDetailMapper::cvrToDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDetailDTO findById(Integer id) {
+        return productDetailMapper.cvrToDTO(productDetailRepo.findById(id).get());
     }
 
     @Override
