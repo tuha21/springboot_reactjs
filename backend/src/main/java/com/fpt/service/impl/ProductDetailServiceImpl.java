@@ -3,6 +3,7 @@ package com.fpt.service.impl;
 import com.fpt.dto.ProductDetailDTO;
 import com.fpt.entity.Product;
 import com.fpt.mapper.ProductDetailMapper;
+import com.fpt.mapper.ProductMapper;
 import com.fpt.repo.ProductDetailRepo;
 import com.fpt.repo.ProductRepo;
 import com.fpt.service.ProductDetailService;
@@ -23,10 +24,14 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     final
     ProductRepo productRepo;
 
-    public ProductDetailServiceImpl(ProductDetailRepo productDetailRepo, ProductRepo productRepo, ProductDetailMapper productDetailMapper) {
+    final
+    ProductMapper productMapper;
+
+    public ProductDetailServiceImpl(ProductDetailRepo productDetailRepo, ProductRepo productRepo, ProductDetailMapper productDetailMapper, ProductMapper productMapper) {
         this.productDetailRepo = productDetailRepo;
         this.productRepo = productRepo;
         this.productDetailMapper = productDetailMapper;
+        this.productMapper = productMapper;
     }
 
     @Override
@@ -37,32 +42,43 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     }
 
     @Override
-    public List<ProductDetailDTO> findByProductId(Product productId) {
+    public List<ProductDetailDTO> findByProductId(Integer productId) {
         return productDetailRepo.findByProductId(productId).stream()
                 .map(productDetailMapper::cvrToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ProductDetailDTO> findByProductIdAndColor(Product productId, String color) {
-        return productDetailRepo.findByProductIdAndColor(productId, color).stream()
-                .map(productDetailMapper::cvrToDTO)
-                .collect(Collectors.toList());
+    public List<String> findDistinctByProductId(Integer productId) {
+        return null;
     }
 
-    @Override
-    public List<ProductDetailDTO> findByProductIdAndSize(Product productId, String size) {
-        return productDetailRepo.findByProductIdAndSize(productId, size).stream()
-                .map(productDetailMapper::cvrToDTO)
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<String> findColorDistinctByProductId(Integer productId) {
+//        var product = productRepo.findById(productId).get();
+//        if (product == null) {
+//            return null;
+//        }
+//        return productDetailRepo.findColorDistinctByProductId(product).stream()
+//                .collect(Collectors.toList());
+//    }
 
-    @Override
-    public List<ProductDetailDTO> findByProductIdAndColorAndSize(Product productId, String color, String size) {
-        return productDetailRepo.findByProductIdAndColorAndSize(productId, color, size).stream()
-                .map(productDetailMapper::cvrToDTO)
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<String> findSizeDistinctByProductId(Integer productId) {
+//        var product = productRepo.findById(productId).get();
+//        if (product == null) {
+//            return null;
+//        }
+//        return productDetailRepo.findSizeDistinctByProductId(product).stream()
+//                .collect(Collectors.toList());
+//    }
+
+//    @Override
+//    public List<ProductDetailDTO> findByProductIdAndColorAndSize(Product productId, String color, String size) {
+//        return productDetailRepo.findByProductIdAndColorAndSize(productId, color, size).stream()
+//                .map(productDetailMapper::cvrToDTO)
+//                .collect(Collectors.toList());
+//    }
 
     @Override
     public ProductDetailDTO findById(Integer id) {
