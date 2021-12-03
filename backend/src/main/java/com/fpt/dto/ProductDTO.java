@@ -23,6 +23,9 @@ public class ProductDTO {
 	private Double price;
 
 
+	private Integer sale;
+
+
 	private Date createDate;
 
 

@@ -33,4 +33,7 @@ public class Order implements Serializable {
 
     @Column(name = "status")
     private Integer status;
+    @ManyToOne
+    @JoinColumn(name = "voucher_id")
+    private Voucher voucher;
 }

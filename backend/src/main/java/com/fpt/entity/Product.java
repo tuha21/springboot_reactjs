@@ -28,6 +28,9 @@ public class Product implements Serializable{
 	
 	@Column(name="price")
 	private Double price;
+
+	@Column(name="sale")
+	private Integer sale;
 	
 	@Column(name="create_date")
 	private Date createDate;
