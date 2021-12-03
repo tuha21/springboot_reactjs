@@ -11,15 +11,11 @@ public interface ProductDetailService {
 
     List<ProductDetailDTO> findAll();
 
-    List<ProductDetailDTO> findByProductId(Product productId);
-
-    List<ProductDetailDTO> findByProductIdAndColor(Product productId, String color);
-
-    List<ProductDetailDTO> findByProductIdAndSize(Product productId, String size);
-
-    List<ProductDetailDTO> findByProductIdAndColorAndSize(Product productId, String color, String size);
-
     ProductDetailDTO findById(Integer id);
+
+    List<ProductDetailDTO> findByProductId(Integer productId);
+
+    List<String> findDistinctByProductId(Integer productId);
 
     ProductDetailDTO create(ProductDetailDTO dto);
 

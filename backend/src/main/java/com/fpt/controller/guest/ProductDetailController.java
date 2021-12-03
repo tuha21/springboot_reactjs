@@ -1,6 +1,7 @@
 package com.fpt.controller.guest;
 
 import com.fpt.dto.ProductDetailDTO;
+import com.fpt.entity.Product;
 import com.fpt.mapper.ProductMapper;
 import com.fpt.service.ProductDetailService;
 import com.fpt.service.ProductService;
@@ -29,29 +30,6 @@ public class ProductDetailController {
         this.productDetailService = productDetailService;
         this.productService = productService;
         this.productMapper = productMapper;
-    }
-
-    @GetMapping("")
-    public ResponseEntity<List<ProductDetailDTO>> findAll() {
-        List<ProductDetailDTO> productDetailDTOS = productDetailService.findAll();
-        if (productDetailDTOS.isEmpty()) {
-            return new ResponseEntity<List<ProductDetailDTO>>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<List<ProductDetailDTO>>(productDetailDTOS, HttpStatus.OK);
-    }
-
-    @GetMapping("{id}")
-    public ResponseEntity<List<ProductDetailDTO>> findByProductIdAndColorAndSize(
-            @PathVariable("id") Optional<Integer> id,
-            @RequestParam("color") Optional<String> color,
-            @RequestParam("size") Optional<String> size) {
-        List<ProductDetailDTO> productDetailDTOS = productDetailService.findByProductIdAndColorAndSize(
-                productMapper.cvToEntity(productService.findById(id.get())), color.get(), size.get()
-        );
-        if (productDetailDTOS.isEmpty()) {
-            return new ResponseEntity<List<ProductDetailDTO>>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<ProductDetailDTO>>(HttpStatus.OK);
     }
 
     @PostMapping

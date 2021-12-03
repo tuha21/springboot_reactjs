@@ -1,39 +1,32 @@
 package com.fpt.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "product_details")
+@Table(name = "sizes")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDetail implements Serializable {
+public class Size implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "color_id")
-    private Color color;
+    @Column(name = "name")
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "size_id")
-    private Size size;
-
-    @Column(name = "qty")
-    private Integer qty;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "size")
+    private List<ProductDetail> productDetails;
 
 }
