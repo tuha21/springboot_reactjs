@@ -1,6 +1,7 @@
 package com.fpt.service;
 
 import com.fpt.dto.ProductDTO;
+import com.fpt.entity.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,5 +24,6 @@ public interface ProductService {
 	public ProductDTO update(ProductDTO dto);
 	
 	public ProductDTO delete(ProductDTO dto);
+
 	
 }
