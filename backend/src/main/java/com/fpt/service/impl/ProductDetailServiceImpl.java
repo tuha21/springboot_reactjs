@@ -49,38 +49,6 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     }
 
     @Override
-    public List<String> findDistinctByProductId(Integer productId) {
-        return null;
-    }
-
-//    @Override
-//    public List<String> findColorDistinctByProductId(Integer productId) {
-//        var product = productRepo.findById(productId).get();
-//        if (product == null) {
-//            return null;
-//        }
-//        return productDetailRepo.findColorDistinctByProductId(product).stream()
-//                .collect(Collectors.toList());
-//    }
-
-//    @Override
-//    public List<String> findSizeDistinctByProductId(Integer productId) {
-//        var product = productRepo.findById(productId).get();
-//        if (product == null) {
-//            return null;
-//        }
-//        return productDetailRepo.findSizeDistinctByProductId(product).stream()
-//                .collect(Collectors.toList());
-//    }
-
-//    @Override
-//    public List<ProductDetailDTO> findByProductIdAndColorAndSize(Product productId, String color, String size) {
-//        return productDetailRepo.findByProductIdAndColorAndSize(productId, color, size).stream()
-//                .map(productDetailMapper::cvrToDTO)
-//                .collect(Collectors.toList());
-//    }
-
-    @Override
     public ProductDetailDTO findById(Integer id) {
         return productDetailMapper.cvrToDTO(productDetailRepo.findById(id).get());
     }
