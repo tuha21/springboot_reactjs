@@ -42,13 +42,6 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     }
 
     @Override
-    public List<ProductDetailDTO> findByProductId(Integer productId) {
-        return productDetailRepo.findByProductId(productId).stream()
-                .map(productDetailMapper::cvrToDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public ProductDetailDTO findById(Integer id) {
         return productDetailMapper.cvrToDTO(productDetailRepo.findById(id).get());
     }

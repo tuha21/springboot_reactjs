@@ -13,8 +13,6 @@ public interface ProductDetailService {
 
     ProductDetailDTO findById(Integer id);
 
-    List<ProductDetailDTO> findByProductId(Integer productId);
-
     ProductDetailDTO create(ProductDetailDTO dto);
 
     ProductDetailDTO update(ProductDetailDTO dto);
