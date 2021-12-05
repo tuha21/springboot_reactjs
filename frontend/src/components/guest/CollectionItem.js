@@ -21,8 +21,8 @@ class CollectionItem extends Component {
                         <img src={"http://localhost:8080/file/read/" + prod.image} alt="Avatar" className="prod-img" />
                         <div className="overlay">
                             <div className="btn-quickview w-100">
-                                <Link onClick={this.setProdDetail} to='/mexxi/productdetail' className="btn rounded-0 bg-light w-100 p-3" style={{ opacity: '0.7' }}>
-                                    QUICK VIEW
+                                <Link onClick={this.setProdDetail} to='/sges/productdetail' className="btn rounded-0 bg-light w-100 p-3" style={{ opacity: '0.7' }}>
+                                    Xem chi tiết
                                 </Link>
                             </div>
                         </div>

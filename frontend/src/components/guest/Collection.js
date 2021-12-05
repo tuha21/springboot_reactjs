@@ -78,11 +78,11 @@ class Collection extends Component {
                 <div className='col-8'>
                     <div className='row'>
                         <div className='col-md-6'>
-                            <span>HOME/COLLECTION</span>
+                            <span>Trang chủ/Bộ sưu tập</span>
                         </div>
                         <div className='col-md-6 text-end'>
                             <select className='selectbox' onChange={this.onFilter}>
-                                <option value={-1}>SELECT COLLECTION</option>
+                                <option value={-1}>Tất cả</option>
                                 {options}
                             </select>
                         </div>

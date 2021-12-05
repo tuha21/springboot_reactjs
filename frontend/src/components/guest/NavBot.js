@@ -8,7 +8,7 @@ class NavBot extends Component {
                     <div className="col">
                     </div>
                     <div className="col">
-                        <h4>T U H A</h4>
+                        <h4>S G E S</h4>
                     </div>
                     <div className="col">
                         <h6>CUSTOMER CARE</h6>
@@ -42,7 +42,7 @@ class NavBot extends Component {
                     </div>
                 </div>
                 <div className="bg-dark p-3 text-center">
-                    <span style={{ color: '#E4E4E4' }}>© 2021 by tudev21. Proudly created with Wix</span>
+                    <span style={{ color: '#E4E4E4' }}>© 2021 by fpt student</span>
                 </div>
             </div>
         );

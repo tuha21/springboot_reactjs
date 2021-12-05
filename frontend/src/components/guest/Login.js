@@ -91,19 +91,19 @@ class Login extends Component {
                 <div className='col'></div>
                 <div className='col'>
                     <div className='p-5'>
-                        <h3>Login</h3>
+                        <h3>Đăng nhập</h3>
                         <form className='mt-3' onSubmit={this.onSubmit}>
                             <div className="mb-3">
-                                <label>Username</label>
-                                <input className="form-control border border-3 rounded-0" type="text" name="username" onChange={this.onChangeHand} placeholder="enter username here" />
+                                <label>Tài khản</label>
+                                <input className="form-control border border-3 rounded-0" type="text" name="username" onChange={this.onChangeHand} placeholder="Nhập tài khoản" />
                             </div>
                             <div className="mb-3">
-                                <label>Password</label>
-                                <input className="form-control border border-3 rounded-0" type="password" name="password" onChange={this.onChangeHand} placeholder="enter password here" />
+                                <label>Mật khẩu</label>
+                                <input className="form-control border border-3 rounded-0" type="password" name="password" onChange={this.onChangeHand} placeholder="Nhập mật khẩu" />
                             </div>
                             {alert}
                             <button className="mt-3 p-0 pt-2 btn w-100 rounded-0" style={{ backgroundColor: '#A3C7BD' }}>
-                                <h5 style={{ color: 'white' }}>Sign in</h5>
+                                <h5 style={{ color: 'white' }}>Đăng nhập</h5>
                             </button>
                         </form>
                     </div>

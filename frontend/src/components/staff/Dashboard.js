@@ -82,14 +82,14 @@ function Dashboard(props) {
 
 
   const isAdmin = (roles) => {
-    if(roles && roles.includes(1)){
+    if (roles && roles.includes(1)) {
       return true;
     }
     else return false
   }
 
   const isStaff = (roles) => {
-    if(roles &&roles.includes(2)){
+    if (roles && roles.includes(2)) {
       return true;
     }
     else return false
@@ -98,10 +98,17 @@ function Dashboard(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar}>
-        <Typography className="p-3" style={{ color: 'white'}}>M E X X I</Typography>
+        <Typography className="p-3" style={{ color: 'white' }}>S G E S</Typography>
       </div>
       <hr></hr>
       <List>
+
+        <Link className={classes.links} to="/sges">
+          <ListItem button>
+            <i className="bi bi-house-door-fill me-2"></i>
+            <ListItemText primary="Home" />
+          </ListItem>
+        </Link>
         {['Product', 'Category', 'Order'].map((text, index) => (
           <Link key={index} className={classes.links} to={"/staff/" + text.toLowerCase()}>
             <ListItem button key={text}>
@@ -112,18 +119,12 @@ function Dashboard(props) {
         ))}
         {
           isAdmin(props.auth.roles) ? <Link className={classes.links} to="/staff/Adminstrator">
-          <ListItem button>
-            <i className="bi bi-house-door-fill me-2"></i>
-            <ListItemText primary="Adminstrator" />
-          </ListItem>
-        </Link> : <></>
+            <ListItem button>
+              <i className="bi bi-house-door-fill me-2"></i>
+              <ListItemText primary="Adminstrator" />
+            </ListItem>
+          </Link> : <></>
         }
-        <Link className={classes.links} to="/mexxi">
-          <ListItem button>
-            <i className="bi bi-house-door-fill me-2"></i>
-            <ListItemText primary="Home" />
-          </ListItem>
-        </Link>
       </List>
       <hr></hr>
     </div>
@@ -188,10 +189,10 @@ function Dashboard(props) {
           <CategoryIndex />
         </Route>
         <Route exact path="/staff/Adminstrator">
-            <Authorized/>
+          <Authorized />
         </Route>
         <Route exact path="/staff/Order">
-            <OrderList/>
+          <OrderList />
         </Route>
       </main>
     </div>
