@@ -35,13 +35,9 @@ class ProductDetail extends Component {
                     <div className='row'>
                         <div className='col-md-2'></div>
                         <div className='col-md-4'>
-                            <span className="mb-0">{"HOME/" + prodDetail.name.toLocaleUpperCase()}</span>
+                            <span className="mb-0">{"Sản phẩm/" + prodDetail.name.toLocaleUpperCase()}</span>
                         </div>
-                        <div className='col-md-4 text-end'>
-                            <h6 className="mb-0">
-                                <button className='btn p-0'>{"<"} Prev</button> {" | "} <button className='btn p-0'>Next{" >"}</button>
-                            </h6>
-                        </div>
+                     
                         <div className='col-md-2'></div>
                     </div>
 
@@ -60,7 +56,7 @@ class ProductDetail extends Component {
                             <div className='col-md-5'>
                                 <div>
                                     <h5>{prodDetail.name}</h5>
-                                    <div className='text-muted'>SKU: {prodDetail.id}</div>
+                                    <div className='text-muted'>Mã SKU: {prodDetail.id}</div>
                                     <div className='mt-3 mb-3'>{prodDetail.price}$</div>
 
                                     <form>
@@ -78,7 +74,7 @@ class ProductDetail extends Component {
                                             </select>
                                         </div>
                                         <div className='mb-4'>
-                                            <div className='text-muted'>Quantity</div>
+                                            <div className='text-muted'>Số lượng</div>
                                             <input type='number' className='form-control border-1 rounded-0 p-2 w-25'
                                                 min={1}
                                                 name='qty'
@@ -91,12 +87,12 @@ class ProductDetail extends Component {
                                                 <button className="mt-3 p-0 pt-2 btn w-100 rounded-0" style={{ backgroundColor: '#A3C7BD' }}
                                                     onClick={this.addToCart}
                                                 >
-                                                    <h5 style={{ color: 'white' }}>Add to Card</h5>
+                                                    <h5 style={{ color: 'white' }}>Thêm vào giỏ hàng</h5>
                                                 </button>
                                             </div>
                                             <div className='col-md-12'>
                                                 <button className="mt-3 p-0 pt-2 btn w-100 rounded-0 bg-dark">
-                                                    <h5 style={{ color: 'white' }}>Buy Now</h5>
+                                                    <h5 style={{ color: 'white' }}>Mua ngay</h5>
                                                 </button>
                                             </div>
                                         </div>
@@ -104,14 +100,14 @@ class ProductDetail extends Component {
                                     <br></br>
                                     <hr></hr>
                                     <div className='mt-3'>
-                                        <h6 className='fw-bold'>PRODUCT INFO</h6>
+                                        <h6 className='fw-bold'>Thông tin sản phẩm</h6>
                                         <p>
                                             I'm a product prodDetail. I'm a great place to add more information about your product such as sizing, material, care and cleaning instructions.
                                         </p>
                                         <hr></hr>
                                     </div>
                                     <div className='mt-3'>
-                                        <h6 className='fw-bold'>CONTACT US</h6>
+                                        <h6 className='fw-bold'>Liên hệ</h6>
                                         <i className="bi bi-facebook pe-2" />
                                         <i className="bi bi-instagram pe-2" />
                                         <i className="bi bi-twitter pe-2" />

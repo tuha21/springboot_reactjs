@@ -12,7 +12,7 @@ class Home extends Component {
                         <div className="col-sm-8">
                             <div className="row">
                                 <div className="col p-0 ps-2">
-                                    <img src="https://static.wixstatic.com/media/a9ff3b_3be32fd5866944a0b2bd867c8e0dbaf9.jpg/v1/fill/w_613,h_588,al_c,q_85,usm_0.66_1.00_0.01/a9ff3b_3be32fd5866944a0b2bd867c8e0dbaf9.webp" className="img-fluid" alt="" />
+                                    <img src="https://media3.scdn.vn/img4/2021/01_08/HZLkEkEd24irMlzQ1aUV.jpg" className="img-fluid" alt="" />
                                 </div>
                                 <div className="col p-0 pe-2">
                                     <div className="w-100 h-100" style={{ backgroundColor: '#FFE9E3', paddingTop: '33%' }}>
@@ -38,7 +38,7 @@ class Home extends Component {
                                     </div>
                                 </div>
                                 <div className="col p-0 pe-2">
-                                    <img src="https://static.wixstatic.com/media/a9ff3b_e3d29ce5f3e946e2b2b4c710e6e7ca75.jpg/v1/fill/w_613,h_588,al_c,q_85,usm_0.66_1.00_0.01/a9ff3b_e3d29ce5f3e946e2b2b4c710e6e7ca75.webp" className="img-fluid" alt="" />
+                                    <img src="https://cf.shopee.vn/file/7505f513809bd9e0fb59aebfcc6b5eb7" className="img-fluid" alt="" />
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@ class Home extends Component {
                 </div>
                 <div>
                     <div className="p-4">
-                        <h3 className="text-center">NEW ARRIVALS</h3>
+                        <h3 className="text-center">Sản phẩm mới</h3>
                     </div>
                     <div className="row m-0">
                         <div className="col-md-2" />
@@ -80,15 +80,15 @@ class Home extends Component {
                     </div>
                 </div>
                 <div className="mt-5 text-center">
-                    <h1>GET ON THE LIST</h1>
-                    <h5>and be the first to shop new arrivals and exclusive promotions.</h5>
+                    <h1>ĐĂNG KÝ NHẬN THÔNG BÁO</h1>
+                    <h5>Nhận thông báo từ SGES.</h5>
                     <div className="row m-4">
                         <div className="col-md-4" />
                         <div className="col-md-4 ps-5 pe-5">
                             <form>
-                                <input type="email" className="form-control border border-3 rounded-0" placeholder="Enter your email here" />
+                                <input type="email" className="form-control border border-3 rounded-0" placeholder="Nhập địa chỉ email" />
                                 <button className="mt-3 p-0 pt-2 btn w-100 rounded-0" style={{ backgroundColor: '#A3C7BD' }}>
-                                    <h5 style={{ color: 'white' }}>Subscribe Now</h5>
+                                    <h5 style={{ color: 'white' }}>Đăng ký ngay</h5>
                                 </button>
                             </form>
                         </div>

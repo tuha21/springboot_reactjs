@@ -73,38 +73,38 @@ class App extends Component {
     let { auth } = this.props;
     return (
       <Router>
-        <Route path="/mexxi">
+        <Route path="/sges">
           <NavTop isStaff={this.isStaff} isAdmin={this.isAdmin} auth={auth} />
-          <Route exact path="/mexxi">
+          <Route exact path="/sges">
             <Home />
           </Route>
-          <Route exact path="/mexxi/collection">
+          <Route exact path="/sges/collection">
             <Collection />
           </Route>
-          <Route exact path="/mexxi/productdetail">
+          <Route exact path="/sges/productdetail">
             <ProductDetail />
           </Route>
-          <Route exact path="/mexxi/cart">
+          <Route exact path="/sges/cart">
             <Cart />
           </Route>
-          <Route exact path="/mexxi/login">
+          <Route exact path="/sges/login">
             <Login setRole={this.setRole} />
           </Route>
-          <Route exact path="/mexxi/checkout">
+          <Route exact path="/sges/checkout">
             {
-              auth === null ? <Redirect to="/mexxi/login" /> : <CheckOut />
+              auth === null ? <Redirect to="/sges/login" /> : <CheckOut />
             }
           </Route>
-          <Route exact path="/mexxi/myorder">
+          <Route exact path="/sges/myorder">
             {
-              auth === null ? <Redirect to="/mexxi/login" /> : <MyOrders />
+              auth === null ? <Redirect to="/sges/login" /> : <MyOrders />
             }
           </Route>
           <NavBot />
         </Route>
         <Route path="/staff">
           {
-            auth !== null && (this.isAdmin(auth.roles) || this.isStaff(auth.roles)) ? <Dashboard auth={this.props.auth} /> : <Redirect to="/mexxi/login" />
+            auth !== null && (this.isAdmin(auth.roles) || this.isStaff(auth.roles)) ? <Dashboard auth={this.props.auth} /> : <Redirect to="/sges/login" />
           }
         </Route>
       </Router>
