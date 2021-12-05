@@ -44,7 +44,6 @@ public class Product implements Serializable{
 	@JoinColumn(name="category_id")
 	private Category category;
 
-	@JsonIgnore
 	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
 	private List<ProductDetail> productDetails;
 }

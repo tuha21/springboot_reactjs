@@ -32,7 +32,8 @@ public class ProductController {
 //	}
 	
 	@GetMapping(value="", params = {"page", "status"})
-	public ResponseEntity<List<ProductDTO>> findAll (@RequestParam("page") Optional<Integer> page, @RequestParam("status") Optional<Integer> status) {
+	public ResponseEntity<List<ProductDTO>> findAll (@RequestParam("page") Optional<Integer> page,
+													 @RequestParam("status") Optional<Integer> status) {
 		List<ProductDTO> products = this.productService.findByStatus(page.orElse(0), status.orElse(1));
 		if(products.isEmpty()) {
 			return new ResponseEntity<List<ProductDTO>>(HttpStatus.NO_CONTENT);

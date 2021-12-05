@@ -19,6 +19,7 @@ public class ProductDTO {
 	private Double price;
 	private Date createDate;
 	private Integer status;
+	private Integer sale;
 	private Integer categoryId;
 	private List<ProductDetail> productDetails;
 
