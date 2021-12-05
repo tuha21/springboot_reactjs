@@ -15,8 +15,6 @@ public interface ProductDetailService {
 
     List<ProductDetailDTO> findByProductId(Integer productId);
 
-    List<String> findDistinctByProductId(Integer productId);
-
     ProductDetailDTO create(ProductDetailDTO dto);
 
     ProductDetailDTO update(ProductDetailDTO dto);

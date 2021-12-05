@@ -20,13 +20,11 @@ public class ProductDetail implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "color_id")
-    private Color color;
+    @Column(name = "color")
+    private String color;
 
-    @ManyToOne
-    @JoinColumn(name = "size_id")
-    private Size size;
+    @Column(name = "size")
+    private String size;
 
     @Column(name = "qty")
     private Integer qty;
