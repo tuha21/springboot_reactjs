@@ -52,14 +52,10 @@ class App extends Component {
                 .then((result) => {
                     console.log(result);
                     let user = JSON.parse(result);
-                    console.log("user", user);
                     let auth = {
                         id: user.id,
                         username: user.username,
                         password: user.password,
-                        fullname: user.fullName,
-                        email: user.email,
-                        photo: user.photo,
                         roles: user.roles,
                     };
                     this.props.setAuth(auth);
@@ -73,30 +69,30 @@ class App extends Component {
         let { auth } = this.props;
         return (
             <Router>
-                <Route path="/mexxi">
+                <Route path="/sges">
                     <NavTop isStaff={this.isStaff} isAdmin={this.isAdmin} auth={auth} />
-                    <Route exact path="/mexxi">
+                    <Route exact path="/sges">
                         <Home />
                     </Route>
-                    <Route exact path="/mexxi/collection">
+                    <Route exact path="/sges/collection">
                         <Collection />
                     </Route>
-                    <Route exact path="/mexxi/productdetail">
+                    <Route exact path="/sges/productdetail">
                         <ProductDetail />
                     </Route>
-                    <Route exact path="/mexxi/cart">
+                    <Route exact path="/sges/cart">
                         <Cart />
                     </Route>
-                    <Route exact path="/mexxi/login">
+                    <Route exact path="/sges/login">
                         <Login setRole={this.setRole} />
                     </Route>
-                    <Route exact path="/mexxi/checkout">
-                        {auth === null ? <Redirect to="/mexxi/login" /> : <CheckOut />}
+                    <Route exact path="/sges/checkout">
+                        {auth === null ? <Redirect to="/sges/login" /> : <CheckOut />}
                     </Route>
-                    <Route exact path="/mexxi/myorder">
-                        {auth === null ? <Redirect to="/mexxi/login" /> : <MyOrders />}
+                    <Route exact path="/sges/myorder">
+                        {auth === null ? <Redirect to="/sges/login" /> : <MyOrders />}
                     </Route>
-                    <Route exact path="/mexxi/visit">
+                    <Route exact path="/sges/visit">
                         <Visit />
                     </Route>
                     <NavBot />
@@ -105,7 +101,7 @@ class App extends Component {
                     {auth !== null && (this.isAdmin(auth.roles) || this.isStaff(auth.roles)) ? (
                         <Dashboard auth={this.props.auth} />
                     ) : (
-                        <Redirect to="/mexxi/login" />
+                        <Redirect to="/sges/login" />
                     )}
                 </Route>
             </Router>
