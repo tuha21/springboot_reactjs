@@ -1,30 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="heroku_f86958d8132d9d8">
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.23">
-    <root id="1">
-      <ServerVersion>5.6.50</ServerVersion>
-      <Grants>heroku_f86958d8132d9d8|schema||b8399b90478c75||ALTER|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||ALTER ROUTINE|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||CREATE|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||CREATE ROUTINE|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||CREATE TEMPORARY TABLES|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||CREATE VIEW|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||DELETE|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||DROP|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||EVENT|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||EXECUTE|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||INDEX|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||INSERT|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||LOCK TABLES|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||REFERENCES|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||SELECT|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||SHOW VIEW|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||TRIGGER|G
-heroku_f86958d8132d9d8|schema||b8399b90478c75||UPDATE|G</Grants>
-      <DefaultEngine>InnoDB</DefaultEngine>
-      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
-      <DefaultCasing>lower/lower</DefaultCasing>
-    </root>
+    <root id="1"/>
     <schema id="2" parent="1" name="heroku_f86958d8132d9d8">
       <Current>1</Current>
       <Collation>utf8_general_ci</Collation>
@@ -735,7 +712,9 @@ heroku_f86958d8132d9d8|schema||b8399b90478c75||UPDATE|G</Grants>
     <table id="226" parent="2" name="categories"/>
     <table id="227" parent="2" name="order_details"/>
     <table id="228" parent="2" name="orders"/>
-    <table id="229" parent="2" name="product_details"/>
+    <table id="229" parent="2" name="product_details">
+      <Collation>utf8_bin</Collation>
+    </table>
     <table id="230" parent="2" name="products"/>
     <table id="231" parent="2" name="roles"/>
     <column id="232" parent="224" name="id">
@@ -920,95 +899,86 @@ heroku_f86958d8132d9d8|schema||b8399b90478c75||UPDATE|G</Grants>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="272" parent="229" name="qty">
+    <column id="272" parent="229" name="color">
       <Position>2</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="273" parent="229" name="color">
+    <column id="273" parent="229" name="size">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="274" parent="229" name="product_id">
+    <column id="274" parent="229" name="qty">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="275" parent="229" name="size">
+    <column id="275" parent="229" name="product_id">
       <Position>5</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
     </column>
-    <index id="276" parent="229" name="FKnfvvq3meg4ha3u1bju9k4is3r">
-      <ColNames>product_id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="277" parent="229" name="PRIMARY">
+    <key id="276" parent="229" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="278" parent="229" name="FKnfvvq3meg4ha3u1bju9k4is3r">
-      <ColNames>product_id</ColNames>
-      <RefTableName>products</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <column id="279" parent="230" name="id">
+    <column id="277" parent="230" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="280" parent="230" name="create_date">
+    <column id="278" parent="230" name="create_date">
       <Position>2</Position>
       <DataType>date|0s</DataType>
     </column>
-    <column id="281" parent="230" name="image">
+    <column id="279" parent="230" name="image">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="282" parent="230" name="name">
+    <column id="280" parent="230" name="name">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="283" parent="230" name="price">
+    <column id="281" parent="230" name="price">
       <Position>5</Position>
       <DataType>double|0s</DataType>
     </column>
-    <column id="284" parent="230" name="status">
+    <column id="282" parent="230" name="status">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="285" parent="230" name="category_id">
+    <column id="283" parent="230" name="category_id">
       <Position>7</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="286" parent="230" name="sale">
+    <column id="284" parent="230" name="sale">
       <Position>8</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <index id="287" parent="230" name="FKog2rp4qthbtt2lfyhfo32lsw9">
+    <index id="285" parent="230" name="FKog2rp4qthbtt2lfyhfo32lsw9">
       <ColNames>category_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="288" parent="230" name="PRIMARY">
+    <key id="286" parent="230" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="289" parent="230" name="FKog2rp4qthbtt2lfyhfo32lsw9">
+    <foreign-key id="287" parent="230" name="FKog2rp4qthbtt2lfyhfo32lsw9">
       <ColNames>category_id</ColNames>
       <RefTableName>categories</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="290" parent="231" name="id">
+    <column id="288" parent="231" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="291" parent="231" name="name">
+    <column id="289" parent="231" name="name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <key id="292" parent="231" name="PRIMARY">
+    <key id="290" parent="231" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

@@ -6,7 +6,9 @@ import com.fpt.dto.CustomUserDetail;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Component
@@ -44,6 +46,14 @@ public class JwtHelper {
                 .parseClaimsJws(jwtToken)
                 .getBody()
                 .getSubject();
+    }
+
+    public String parseJwt(HttpServletRequest request) {
+        String jwtToken = request.getHeader("Authorization");
+        if(StringUtils.hasText(jwtToken) && jwtToken.startsWith("Bearer ")){
+            return jwtToken.substring(7,jwtToken.length());
+        }
+        return null;
     }
 
     public boolean validateJwtToken(String jwtToken) {

@@ -14,7 +14,6 @@ import java.util.List;
 @Table(name="accounts")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class Account implements Serializable{
 	
 	@Id
@@ -38,7 +37,7 @@ public class Account implements Serializable{
 	
 	@Column(name="status")
 	private Integer status;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
 	private List<Authority> authorities;
@@ -46,4 +45,17 @@ public class Account implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
 	private List<Order> orders;
+
+	public Account() {
+	}
+
+	public Account(String username, String password, String fullname, String email, String photo, Integer status) {
+		this.username = username;
+		this.password = password;
+		this.fullname = fullname;
+		this.email = email;
+		this.photo = photo;
+		this.status = status;
+	}
+
 }

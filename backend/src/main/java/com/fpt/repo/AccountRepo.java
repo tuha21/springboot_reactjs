@@ -17,4 +17,8 @@ public interface AccountRepo extends JpaRepository<Account, Integer>{
 	
 	@Query("SELECT entity FROM  Account entity WHERE entity.username=:username and entity.password=:password and entity.status=1")
 	Account findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
+	boolean existsByEmail(String email);
+
+	boolean existsByUsername(String username);
 }
