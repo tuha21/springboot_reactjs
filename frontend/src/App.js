@@ -13,6 +13,8 @@ import MyOrders from "./components/guest/MyOrders";
 import { connect } from "react-redux";
 import * as action from "./actions/index";
 import Visit from "./components/guest/Visit";
+import Profile from "./components/guest/Profile";
+import AboutUs from "./components/guest/AboutUs";
 
 class App extends Component {
     constructor(props) {
@@ -94,6 +96,30 @@ class App extends Component {
                     </Route>
                     <Route exact path="/sges/visit">
                         <Visit />
+                    </Route>
+                    <Route exact path="/sges/myprofile">
+                        {auth === null ? (
+                            <Redirect to="/sges/login" />
+                        ) : (
+                            <Profile auth={auth} isUpdate={false} />
+                        )}
+                    </Route>
+                    <Route exact path="/sges/updateprofile">
+                        {auth === null ? (
+                            <Redirect to="/sges/login" />
+                        ) : (
+                            <Profile auth={auth} isUpdate={true} />
+                        )}
+                    </Route>
+                    <Route exact path="/sges/changepassword">
+                        {auth === null ? (
+                            <Redirect to="/sges/login" />
+                        ) : (
+                            <Profile auth={auth} changepass={true} />
+                        )}
+                    </Route>
+                    <Route exact path="/sges/aboutus">
+                        <AboutUs />
                     </Route>
                     <NavBot />
                 </Route>
