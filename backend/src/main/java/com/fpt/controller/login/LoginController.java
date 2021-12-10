@@ -131,15 +131,18 @@ public class LoginController {
 		Account account;
 		try {
 			account = accountRepo.findByUsername(username);
-			//			if (account==null){
-//				return new ResponseEntity<>("User Not Found with -> username"+username,HttpStatus.OK);
-//			}
+            if (changeProfile.getEmail() == null) {
+                return new ResponseEntity<>(new MessageResponse("Email cannot be blank!"), HttpStatus.BAD_REQUEST);
+            }
+            if (changeProfile.getFullname() == null) {
+                return new ResponseEntity<>(new MessageResponse("Fullname cannot be blank!"), HttpStatus.BAD_REQUEST);
+            }
 			if (changeProfile.getEmail().equals(account.getEmail())){
 					account.setEmail(changeProfile.getEmail());
 			}
 			if (!changeProfile.getEmail().equals(account.getEmail())){
 				if (accountRepo.existsByEmail(changeProfile.getEmail())){
-					return new ResponseEntity<>(new MessageResponse("Email is exist!"), HttpStatus.OK);
+					return new ResponseEntity<>(new MessageResponse("Email already in use!"), HttpStatus.BAD_REQUEST);
 				}
 				account.setEmail(changeProfile.getEmail());
 			}
@@ -147,9 +150,9 @@ public class LoginController {
 			account.setEmail(changeProfile.getEmail());
 			account.setPhoto(changeProfile.getPhoto());
 			accountRepo.save(account);
-			return new ResponseEntity<>(new MessageResponse("Change success"), HttpStatus.OK);
+			return new ResponseEntity<>(new MessageResponse("Account update successful!"), HttpStatus.OK);
 		} catch (UsernameNotFoundException e){
-			return new ResponseEntity<>(new MessageResponse(e.getMessage()),HttpStatus.NOT_FOUND );
+			return new ResponseEntity<>(new MessageResponse(e.getMessage()),HttpStatus.NOT_FOUND);
 		}
 	}
 
