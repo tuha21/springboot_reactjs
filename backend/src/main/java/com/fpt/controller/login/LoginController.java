@@ -130,20 +130,21 @@ public class LoginController {
 		String username= jwtHelper.getUsernameFromJwt(jwt);
 		Account account;
 		try {
-			if(accountRepo.findByUsername(changeProfile.getUsername())!=null){
-				return new ResponseEntity<>(new MessageResponse("User name is exist!"), HttpStatus.OK);
-			}
-			if(accountRepo.existsByEmail(changeProfile.getEmail())){
-				return new ResponseEntity<>(new MessageResponse("Email is exist!"), HttpStatus.OK);
-			}
 			account = accountRepo.findByUsername(username);
-			if (account==null){
-				return new ResponseEntity<>("User Not Found with -> username"+username,HttpStatus.OK);
+			//			if (account==null){
+//				return new ResponseEntity<>("User Not Found with -> username"+username,HttpStatus.OK);
+//			}
+			if (changeProfile.getEmail().equals(account.getEmail())){
+					account.setEmail(changeProfile.getEmail());
 			}
-			account.setUsername(changeProfile.getUsername());
+			if (!changeProfile.getEmail().equals(account.getEmail())){
+				if (accountRepo.existsByEmail(changeProfile.getEmail())){
+					return new ResponseEntity<>(new MessageResponse("Email is exist!"), HttpStatus.OK);
+				}
+				account.setEmail(changeProfile.getEmail());
+			}
 			account.setFullname(changeProfile.getFullname());
 			account.setEmail(changeProfile.getEmail());
-			account.setStatus(changeProfile.getStatus());
 			account.setPhoto(changeProfile.getPhoto());
 			accountRepo.save(account);
 			return new ResponseEntity<>(new MessageResponse("Change success"), HttpStatus.OK);
