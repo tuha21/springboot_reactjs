@@ -92,6 +92,12 @@
   color: #777777;
 }
 
+.profile .container .profile-layout .col-9 .card .px-4 .content-info .forget-btn:hover {
+  color: #068cc1;
+  -webkit-text-decoration: dashed;
+          text-decoration: dashed;
+}
+
 .profile .container .profile-layout .col-9 .card .px-4 .content-info .left-content {
   padding-right: 30px;
 }

@@ -77,6 +77,10 @@
                             }
                             .forget-btn {
                                 color: #777777;
+                                &:hover {
+                                    color: #068cc1;
+                                    text-decoration: dashed;
+                                }
                             }
                             .left-content {
                                 padding-right: 30px;
