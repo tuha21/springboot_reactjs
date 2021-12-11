@@ -22,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.xml.sax.ErrorHandler;
 
@@ -125,21 +126,27 @@ public class LoginController {
 	}
 
 	@PutMapping("/changeProfile")
-	public ResponseEntity<Object> changProfile(HttpServletRequest request,@Valid @RequestBody ChangeProfile changeProfile){
+	public ResponseEntity<Object> changProfile(HttpServletRequest request, @Valid @RequestBody ChangeProfile changeProfile, BindingResult result){
 		String jwt = jwtHelper.parseJwt(request);
 		String username= jwtHelper.getUsernameFromJwt(jwt);
 		Account account;
+		if (result.hasErrors()) {
+			return new ResponseEntity<>("Email address invalid!", HttpStatus.BAD_REQUEST);
+		}
 		try {
 			account = accountRepo.findByUsername(username);
-			//			if (account==null){
-//				return new ResponseEntity<>("User Not Found with -> username"+username,HttpStatus.OK);
-//			}
+            if (changeProfile.getEmail() == null) {
+                return new ResponseEntity<>(new MessageResponse("Email cannot be blank!"), HttpStatus.BAD_REQUEST);
+            }
+            if (changeProfile.getFullname() == null) {
+                return new ResponseEntity<>(new MessageResponse("Fullname cannot be blank!"), HttpStatus.BAD_REQUEST);
+            }
 			if (changeProfile.getEmail().equals(account.getEmail())){
 					account.setEmail(changeProfile.getEmail());
 			}
 			if (!changeProfile.getEmail().equals(account.getEmail())){
 				if (accountRepo.existsByEmail(changeProfile.getEmail())){
-					return new ResponseEntity<>(new MessageResponse("Email is exist!"), HttpStatus.OK);
+					return new ResponseEntity<>(new MessageResponse("Email already in use!"), HttpStatus.BAD_REQUEST);
 				}
 				account.setEmail(changeProfile.getEmail());
 			}
@@ -147,9 +154,9 @@ public class LoginController {
 			account.setEmail(changeProfile.getEmail());
 			account.setPhoto(changeProfile.getPhoto());
 			accountRepo.save(account);
-			return new ResponseEntity<>(new MessageResponse("Change success"), HttpStatus.OK);
+			return new ResponseEntity<>(new MessageResponse("Account update successful!"), HttpStatus.OK);
 		} catch (UsernameNotFoundException e){
-			return new ResponseEntity<>(new MessageResponse(e.getMessage()),HttpStatus.NOT_FOUND );
+			return new ResponseEntity<>(new MessageResponse(e.getMessage()),HttpStatus.NOT_FOUND);
 		}
 	}
 
