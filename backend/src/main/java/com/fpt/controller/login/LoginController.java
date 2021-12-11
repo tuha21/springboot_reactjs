@@ -22,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.xml.sax.ErrorHandler;
 
@@ -125,10 +126,13 @@ public class LoginController {
 	}
 
 	@PutMapping("/changeProfile")
-	public ResponseEntity<Object> changProfile(HttpServletRequest request,@Valid @RequestBody ChangeProfile changeProfile){
+	public ResponseEntity<Object> changProfile(HttpServletRequest request, @Valid @RequestBody ChangeProfile changeProfile, BindingResult result){
 		String jwt = jwtHelper.parseJwt(request);
 		String username= jwtHelper.getUsernameFromJwt(jwt);
 		Account account;
+		if (result.hasErrors()) {
+			return new ResponseEntity<>("Email address invalid!", HttpStatus.BAD_REQUEST);
+		}
 		try {
 			account = accountRepo.findByUsername(username);
             if (changeProfile.getEmail() == null) {
