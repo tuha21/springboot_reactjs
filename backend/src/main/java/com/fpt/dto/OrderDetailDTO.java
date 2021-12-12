@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderDetailDTO extends OrderDetail implements Serializable {
+public class OrderDetailDTO implements Serializable {
 
     private Integer id;
 
@@ -20,9 +20,9 @@ public class OrderDetailDTO extends OrderDetail implements Serializable {
 
     private Integer productId;
 
-    private Double price;
+    private String size;
 
-    private Integer size;
+    private String color;
 
     private Integer quantity;
 

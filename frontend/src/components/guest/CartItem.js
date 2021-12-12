@@ -55,7 +55,8 @@ class CartItem extends Component {
                         </div>
                         <div className='col-8'>
                             <h6>{cartItem.prod.name}</h6>
-                            <div>{cartItem.prod.price}$</div>
+                            <div>{cartItem.prod.sale > 0 ? <del>{cartItem.prod.price}</del> : cartItem.prod.price}$</div>
+                            <div>{cartItem.prod.sale > 0 ? cartItem.prod.sale : ""}$</div>
                             <span>Size: {cartItem.size}</span>
                             &nbsp; | &nbsp;
                             <span>Màu: {cartItem.color}</span>

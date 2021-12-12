@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
-export default function Paypal({totalPay}) {
+export default function Paypal({totalPay, onOrder}) {
   const paypal = useRef();
 
   useEffect(() => {
@@ -23,6 +23,7 @@ export default function Paypal({totalPay}) {
         onApprove: async (data, actions) => {
           const order = await actions.order.capture();
           console.log(order);
+          onOrder()
         },
         onError: (err) => {
           console.log(err);

@@ -3,29 +3,186 @@ import CartItem from "./CartItem";
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import Paypal from "./PayPal";
+import MyOrdersService from "../../services/guestservice/MyOrdersService";
+
 class Cart extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             paymentMethod: 0, // 0: cod 1: paypal
-            isShowPaypal: false
+            isShowPaypal: false,
+            order: {
+                name: '',
+                email: '',
+                phone: '',
+                address: ''
+            },
+            validname: {
+                status: true,
+                message: ""
+            },
+            validemail: {
+                status: true,
+                message: ""
+            },
+            validphone: {
+                status: true,
+                message: ""
+            },
+            validaddress: {
+                status: true,
+                message: ""
+            }
         }
+    }
+
+    validate = () => {
+        const { name, email, phone, address } = this.state.order
+        const isValid = name !== "" && email !== "" && phone !== "" && address !== "";
+        if (name === "") {
+            this.setState({
+                validname: {
+                    status: false,
+                    message: "Không bỏ trống họ và tên"
+                }
+            })
+        } else {
+            this.setState({
+                validname: {
+                    status: true,
+                    message: ""
+                }
+            })
+        }
+
+        if (email === "") {
+            this.setState({
+                validemail: {
+                    status: false,
+                    message: "Không bỏ trống email"
+                }
+            })
+        } else {
+            this.setState({
+                validemail: {
+                    status: true,
+                    message: ""
+                }
+
+            })
+        }
+
+        if (phone === "") {
+            this.setState({
+                validphone: {
+                    status: false,
+                    message: "Không bỏ trống số điện thoại"
+                }
+
+            })
+        } else {
+            this.setState({
+                validphone: {
+                    status: true,
+                    message: ""
+                }
+
+            })
+        }
+
+        if (address === "") {
+            this.setState({
+                validaddress: {
+                    status: false,
+                    message: "Không bỏ trống địa chỉ nhận hàng"
+
+                }
+            })
+        } else {
+            this.setState({
+                validaddress: {
+                    status: true,
+                    message: ""
+                }
+
+            })
+        }
+        return isValid;
+    }
+
+    onChangeInfo = (event) => {
+        const { name, value } = event.target;
+        this.setState({
+            order: {
+                ...this.state.order,
+                [name]: value,
+            }
+        })
+    }
+
+    order = () => {
+        let order = {
+            "id": -1,
+            "accountId": this.props.auth.id,
+            "createDate": new Date(),
+            "address": this.state.order.address,
+            "status": 0,
+            "name": this.state.order.name,
+            "phone": this.state.order.phone,
+            "email": this.state.order.email
+        }
+
+        MyOrdersService.addOrder(order)
+            .then(response => response.text())
+            .then(result => {
+                console.log(result)
+                let order = JSON.parse(result);
+                let { cart } = this.props;
+                let orderDetailList = cart.map(val => {
+                    return {
+                        "id": -1,
+                        "orderId": order.id,
+                        "productId": val.prod.id,
+                        "size": val.size,
+                        "color": val.color,
+                        "quantity": val.qty
+                    }
+                })
+                for (let o of orderDetailList) {
+                    MyOrdersService.addOrderDetail(o)
+                        .then(response => response.text())
+                        .then(result => console.log(result))
+                        .catch(error => console.log('error', error));
+                }
+            })
+            .catch(error => console.log('error', error))
+            .finally(() => {
+                alert("Đặt hành thành công!")
+            });
     }
 
     onPay = () => {
-        if (this.state.paymentMethod === 1) {
-            this.setState({
-                isShowPaypal: true
-            })
+        if (this.validate()) {
+            if (this.state.paymentMethod === 1) {
+                this.setState({
+                    isShowPaypal: true
+                })
+            }
+            if (this.state.paymentMethod === 0) {
+                this.order();
+            }
         }
+        else alert("Điền đầy đủ thông tin trước khi thanh toán")
     }
 
     render() {
-        var { cart } = this.props
+        var { cart } = this.props;
+        const { validname, validemail, validphone, validaddress } = this.state
         var subTotal = 0;
         var element = cart.map((val, ind) => {
-            subTotal += val.prod.price * val.qty
+            const price = val.prod.sale > 0 ? val.prod.sale : val.prod.price
+            subTotal += price * val.qty
             return <CartItem key={ind}
                 cartItem={val}
                 deleteFromCart={this.props.deleteFromCart}
@@ -60,8 +217,8 @@ class Cart extends Component {
                                                 <div className='col-6 text-end pb-3'>{subTotal}$</div>
                                                 <div className='col-6 text-start pb-3'>Mã giảm giá</div>
                                                 <div className='col-6 text-end pb-3'>0đ</div>
-                                                {/* <div className='col-6 text-start pb-3'>Tiền ship</div>
-                                            <div className='col-6 text-end pb-3'>FREE</div> */}
+                                                <div className='col-6 text-start pb-3'>Phí giao hàng</div>
+                                                <div className='col-6 text-end pb-3'>FREE</div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -77,25 +234,45 @@ class Cart extends Component {
                                         <label for="name" className="form-label">Tên người nhận hàng</label>
                                         <input type="text" className="form-control" id="name"
                                             name="name"
+                                            onChange={this.onChangeInfo}
+                                            value={this.state.order.name}
                                         />
+                                        {
+                                            validname.status ? "" : <div id="emailHelp" className="form-text text-danger">{validname.message}</div>
+                                        }
                                     </div>
                                     <div className="mb-3">
                                         <label for="exampleInputEmail1" className="form-label">Email</label>
                                         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                                             name="email"
+                                            onChange={this.onChangeInfo}
+                                            value={this.state.order.email}
                                         />
+                                        {
+                                            validemail.status ? "" : <div id="emailHelp" className="form-text text-danger">{validemail.message}</div>
+                                        }
                                     </div>
                                     <div className="mb-3">
                                         <label for="phone" className="form-label">Số điện thoại</label>
                                         <input type="number" className="form-control" id="phone"
                                             name="phone"
+                                            onChange={this.onChangeInfo}
+                                            value={this.state.order.phone}
                                         />
+                                        {
+                                            validphone.status ? "" : <div id="emailHelp" className="form-text text-danger">{validphone.message}</div>
+                                        }
                                     </div>
                                     <div className="mb-3">
                                         <label for="exampleInputEmail1" className="form-label">Địa chỉ nhận hàng</label>
                                         <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                                             name="address"
+                                            onChange={this.onChangeInfo}
+                                            value={this.state.order.address}
                                         />
+                                        {
+                                            validaddress.status ? "" : <div id="emailHelp" className="form-text text-danger">{validaddress.message}</div>
+                                        }
                                     </div>
                                     <div className="mb-3">
                                         <div className="row">
@@ -144,9 +321,18 @@ class Cart extends Component {
                                         Thanh toán bằng ví điện tử
                                     </label>
                                 </div>
-                                <button className="mt-3 w-100 btn-checkout" onClick={this.onPay}>Thanh toán</button>
+                                {
+                                    this.props.auth !== null ?
+                                        this.props.cart.length > 0 ? <button className="mt-3 w-100 btn-checkout" onClick={this.onPay}>Thanh toán</button> : ''
+                                        :
+                                        <button className="mt-3 w-100 btn-checkout">
+                                            <Link style={{ textDecoration: 'none', color: 'white' }} to={"/sges/login"}>
+                                                Đăng nhập để thanh toán
+                                            </Link>
+                                        </button>
+                                }
                                 <div className="mt-3">
-                                    {this.state.isShowPaypal ? <Paypal totalPay={10} /> : ""}
+                                    {this.state.isShowPaypal ? <Paypal totalPay={subTotal} onOrder={this.order}/> : ""}
                                 </div>
                             </div>
                         </div>
@@ -160,7 +346,8 @@ class Cart extends Component {
 
 const mapStateToProps = state => {
     return {
-        cart: state.cart
+        cart: state.cart,
+        auth: state.auth
     }
 }
 

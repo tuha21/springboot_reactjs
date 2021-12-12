@@ -66,6 +66,7 @@ class Login extends Component {
                         console.log(result)
                         let user = JSON.parse(result)
                         let auth = {
+                            id: user.id,
                             username: user.username,
                             fullName: user.fullName,
                             email: user.email,

@@ -15,14 +15,10 @@ j
 :src/main/java/com/fpt/controller/guest/TestController.java,5\2\5244bd98209b44e27050615415960f016ef32c86
 j
 :src/main/java/com/fpt/controller/admin/RoleController.java,2\9\29062376c3e7d42fddc55dfc89ee05025c010159
-W
-'src/main/java/com/fpt/dto/OrderDTO.java,f\2\f26f32f07441431c00f284c8cd5df198e73f17c1
 X
 (src/main/java/com/fpt/repo/RoleRepo.java,f\5\f5b2ed9c7c6bde29428bfa0e893c191284568d3c
 [
 +src/main/java/com/fpt/repo/ProductRepo.java,6\f\6f4372229475921df400c6ae19cdd0fafddcd0d3
-_
-/src/main/java/com/fpt/dto/ProductDetailDTO.java,5\9\5969c4ef72834efc1ce3359c5bf6a1263db87843
 Y
 )src/main/java/com/fpt/repo/OrderRepo.java,8\2\828e7ad33eba74e5587337e6f832b54b370d27f2
 V
@@ -35,10 +31,6 @@ _
 /src/main/java/com/fpt/repo/OrderDetailRepo.java,7\0\707936df0d515266db4680e920bf6b2de6d757ad
 j
 :src/main/java/com/fpt/controller/guest/CateController.java,1\c\1c09da7ae52b37e206053e7473fe76a48b7b146f
-i
-9src/main/java/com/fpt/controller/guest/OrdController.java,2\2\22cd7cfb672dd2c417567a79fd8de81fd1286e30
-l
-<src/main/java/com/fpt/controller/guest/OrdDetController.java,7\7\7769b80b58a91c6d46b19a1a309061cf2b3503c9
 ]
 -src/main/java/com/fpt/repo/AuthorityRepo.java,1\1\115b654a29e27cdb8a4720c00d79eabb9da333b2
 e
@@ -55,9 +47,5 @@ V
 &src/main/java/com/fpt/entity/Role.java,4\d\4d60f18f6129e27cf95aeb773c32d9b3ad3eebf5
 Y
 )src/main/java/com/fpt/entity/Product.java,6\a\6a3b567807ea7c74340a794cf389af50337a45ec
-]
--src/main/java/com/fpt/entity/OrderDetail.java,c\1\c1a18e19dca5503027a15e9a547d99019b047fce
-W
-'src/main/java/com/fpt/entity/Order.java,d\6\d6a5dfe509be3d26a94e658e6a422f3b727dbec7
 Z
 *src/main/java/com/fpt/entity/Category.java,1\6\16358b13c25b10c92de60d057173d3d599818ba8
