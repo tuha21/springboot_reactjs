@@ -8,6 +8,7 @@ import { UPDATE_PROFILE } from "./../../constants/constants";
 import ProfileService from "../../services/guestservice/ProfileService";
 import { BiShow } from "react-icons/bi";
 import LoginService from "../../services/loginservice/LoginService";
+import avatar from "../../img/avatar.png";
 
 const Profile = ({ isUpdate, changepass }) => {
     const profile = useSelector((state) => state.profile);
@@ -137,12 +138,7 @@ const Profile = ({ isUpdate, changepass }) => {
                     <div className="col-3 py-3 profile-menu">
                         <div className="row m-0 d-flex pb-3 account">
                             <div className="col-4 p-0 d-flex justify-content-center align-items-center">
-                                <img
-                                    src="https://www.donki.com/en/official-character/asset/img/profile/donpenProf03.png"
-                                    className="img-fluid"
-                                    width="100%"
-                                    alt="avatar"
-                                />
+                                <img src={avatar} className="img-fluid" width="100%" alt="avatar" />
                             </div>
                             <div className="col-8 p-0">
                                 <div className="d-grid">
@@ -180,7 +176,7 @@ const Profile = ({ isUpdate, changepass }) => {
                                     </div>
                                 </div>
                             </Link>
-                            <Link to="#">
+                            <Link to="myorder">
                                 <div className="h-100 btn d-flex justify-content-center align-items-center">
                                     <div className="col-3 icon-submenu">
                                         <RiFileList3Line />
@@ -465,14 +461,14 @@ const Profile = ({ isUpdate, changepass }) => {
                                                             className="btn border-0 p-0"
                                                         >
                                                             <img
-                                                                src="https://www.donki.com/en/official-character/asset/img/profile/donpenProf03.png"
+                                                                src={avatar}
                                                                 className="img-fluid"
                                                                 alt="avatar"
                                                             />
                                                         </label>
                                                     ) : (
                                                         <img
-                                                            src="https://www.donki.com/en/official-character/asset/img/profile/donpenProf03.png"
+                                                            src={avatar}
                                                             className="img-fluid"
                                                             alt="avatar"
                                                         />

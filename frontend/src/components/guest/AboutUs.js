@@ -1,6 +1,9 @@
 import React from "react";
 import "../../css/about.css";
 import { Link } from "react-router-dom";
+import stories from "../../img/stories.jpg";
+import clothing from "../../img/clothing.jpg";
+import banner from "../../img/banner.webp";
 
 const AboutUs = () => {
     return (
@@ -8,11 +11,7 @@ const AboutUs = () => {
             <div className="about-section">
                 <section className="d-flex align-items-center section-storis">
                     <div className="col-6 d-flex justify-content-end left-column">
-                        <img
-                            src="https://scontent-hkt1-2.xx.fbcdn.net/v/t39.30808-6/215358302_3010202009260042_7197260569885947401_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=730e14&_nc_ohc=t92ulIzXCZQAX_UBdHc&_nc_ht=scontent-hkt1-2.xx&oh=49051957528fec48743c821d5b4287d4&oe=61B64580"
-                            alt=""
-                            width="100%"
-                        />
+                        <img src={stories} alt="" width="100%" />
                     </div>
                     <div className="col-6 d-grid right-column">
                         <div className="py-3 stories">
@@ -49,20 +48,12 @@ const AboutUs = () => {
                             </div>
                         </div>
                         <div className="col-6 right-column right-column">
-                            <img
-                                src="https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/251443232_3088602194753356_8468644083226095237_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=730e14&_nc_ohc=YQxOOC4lCAsAX-VCSG9&_nc_ht=scontent-hkg4-2.xx&oh=ba781cc96e8d32a219499452cfe11786&oe=61B81FC1"
-                                alt=""
-                                width="100%"
-                            />
+                            <img src={clothing} alt="" width="100%" />
                         </div>
                     </div>
                 </div>
                 <div className="banner">
-                    <img
-                        src="https://static.wixstatic.com/media/8220c33dd55d4c9582afa649c952a01a.jpg/v1/fill/w_1903,h_500,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01/8220c33dd55d4c9582afa649c952a01a.webp"
-                        alt=""
-                        width="100%"
-                    />
+                    <img src={banner} alt="" width="100%" />
                 </div>
                 <div className="get-in-touch d-flex justify-content-center">
                     <div className="col-6 d-grid">
