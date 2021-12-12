@@ -9,8 +9,6 @@ b
 2src/main/java/com/fpt/MexxiBackendApplication.java,4\6\46fe22bdb51c676002055e3ae89134f151d3136a
 i
 9src/main/java/com/fpt/configure/ModelMapperConfigure.java,b\0\b098a2ff9bd7c9accbce1ac6c1b80031e83d0702
-n
->src/main/java/com/fpt/controller/staff/CategoryController.java,c\9\c9f0943e8d1193319234bde60e09b4b96f7e22f9
 k
 ;src/main/java/com/fpt/controller/staff/OrderController.java,e\d\ed4667d53a2cddcf612f18bacd9da6ff0b4bd808
 j
@@ -41,8 +39,6 @@ i
 9src/main/java/com/fpt/controller/guest/OrdController.java,2\2\22cd7cfb672dd2c417567a79fd8de81fd1286e30
 l
 <src/main/java/com/fpt/controller/guest/OrdDetController.java,7\7\7769b80b58a91c6d46b19a1a309061cf2b3503c9
-j
-:src/main/java/com/fpt/controller/guest/ProdController.java,4\9\49d6e9a63d2316cac08c0acc512251ff4947f05b
 ]
 -src/main/java/com/fpt/repo/AuthorityRepo.java,1\1\115b654a29e27cdb8a4720c00d79eabb9da333b2
 e
@@ -55,12 +51,8 @@ j
 :src/main/java/com/fpt/service/impl/ProductServiceImpl.java,8\4\848de626518b2f207e54353ab3c4132aff571bba
 e
 5src/main/java/com/fpt/service/FileManagerService.java,3\d\3dcb6c87097f9b2a6239ad2c7dc6622a8e0793d7
-m
-=src/main/java/com/fpt/controller/staff/ProductController.java,0\f\0f4f4e951dc7ab3a68593114f5754fc23fdcbe46
 V
 &src/main/java/com/fpt/entity/Role.java,4\d\4d60f18f6129e27cf95aeb773c32d9b3ad3eebf5
-_
-/src/main/java/com/fpt/entity/ProductDetail.java,9\9\99a5885d257422f12992f73f6b3e60bf6c687633
 Y
 )src/main/java/com/fpt/entity/Product.java,6\a\6a3b567807ea7c74340a794cf389af50337a45ec
 ]
@@ -69,5 +61,3 @@ W
 'src/main/java/com/fpt/entity/Order.java,d\6\d6a5dfe509be3d26a94e658e6a422f3b727dbec7
 Z
 *src/main/java/com/fpt/entity/Category.java,1\6\16358b13c25b10c92de60d057173d3d599818ba8
-p
-@src/main/java/com/fpt/controller/tool/FileManagerController.java,f\f\ff92d098eb53fa6d9cd332ce4449de1245207a37
