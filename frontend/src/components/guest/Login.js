@@ -105,6 +105,8 @@ class Login extends Component {
                             <button className="mt-3 p-0 pt-2 btn w-100 rounded-0" style={{ backgroundColor: '#A3C7BD' }}>
                                 <h5 style={{ color: 'white' }}>Đăng nhập</h5>
                             </button>
+                            <a className="btn btn-block social-btn google" href="http://localhost:8080/oauth2/authorize/google">
+                             Log in with Google</a>
                         </form>
                     </div>
                 </div>

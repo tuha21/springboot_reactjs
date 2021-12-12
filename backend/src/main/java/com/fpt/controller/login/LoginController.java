@@ -9,6 +9,7 @@ import com.fpt.dto.request.ChangeProfile;
 import com.fpt.dto.request.Signup;
 import com.fpt.dto.response.MessageResponse;
 import com.fpt.entity.Account;
+import com.fpt.entity.AuthProvider;
 import com.fpt.jwt.JwtHelper;
 import com.fpt.repo.AccountRepo;
 import com.fpt.service.AccountService;
@@ -77,6 +78,7 @@ public class LoginController {
 				signup.getPhoto(),
 				signup.getStatus()
 				);
+		account.setProvider(AuthProvider.LOCAL);
 		accountRepo.save(account);
 		return new ResponseEntity<>("Account registered successfully!",HttpStatus.OK);
 	}

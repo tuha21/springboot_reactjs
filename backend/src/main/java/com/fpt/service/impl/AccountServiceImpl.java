@@ -8,9 +8,11 @@ import com.fpt.mapper.AccountMapper;
 import com.fpt.repo.AccountRepo;
 import com.fpt.security.auth2.OAuth2UserInfo;
 import com.fpt.service.AccountService;
+import com.fpt.service.FileManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,6 +25,9 @@ public class AccountServiceImpl implements AccountService{
 	
 	@Autowired
 	AccountMapper accountMapper;
+
+	@Autowired
+	FileManagerServiceImpl fileManagerService;
 	
 	@Override
 	public List<AccountDTO> findAll() {

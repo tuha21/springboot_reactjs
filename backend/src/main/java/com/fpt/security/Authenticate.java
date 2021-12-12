@@ -62,9 +62,9 @@ public class Authenticate extends WebSecurityConfigurerAdapter{
 		.csrf()
 		.disable()
         .authorizeRequests()
-//        .antMatchers("/admin/**").hasRole("ADMIN")
-//        .antMatchers("/staff/**").hasAnyRole("STAFF", "ADMIN")
-//				.antMatchers("/guest/order/**").authenticated()
+        .antMatchers("/admin/**").hasRole("ADMIN")
+        .antMatchers("/staff/**").hasAnyRole("STAFF", "ADMIN")
+				.antMatchers("/guest/order/**").authenticated()
 //				.anyRequest().permitAll();
         .anyRequest().permitAll()
 

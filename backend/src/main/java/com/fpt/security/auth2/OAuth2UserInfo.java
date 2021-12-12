@@ -1,5 +1,7 @@
 package com.fpt.security.auth2;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Map;
 
 public abstract class OAuth2UserInfo {

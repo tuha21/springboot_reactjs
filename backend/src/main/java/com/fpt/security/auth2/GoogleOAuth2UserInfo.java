@@ -1,5 +1,7 @@
 package com.fpt.security.auth2;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Map;
 
 public class GoogleOAuth2UserInfo extends OAuth2UserInfo {
