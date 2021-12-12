@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import "../../css/profile.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { RiUserLine, RiFileList3Line } from "react-icons/ri";
 import moduleName from "../../services/guestservice/ProfileService";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_PROFILE } from "./../../constants/constants";
 import ProfileService from "../../services/guestservice/ProfileService";
+import { BiShow } from "react-icons/bi";
+import LoginService from "../../services/loginservice/LoginService";
 
-const Profile = ({ auth, isUpdate, changepass }) => {
+const Profile = ({ isUpdate, changepass }) => {
     const profile = useSelector((state) => state.profile);
+    const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
     const [currentProfile, setCurrentProfile] = useState({
@@ -18,8 +21,36 @@ const Profile = ({ auth, isUpdate, changepass }) => {
         currentPassword: "",
         newPassword: "",
         confirmPassword: "",
-        hidden: false,
     });
+
+    const [success, setSuccess] = useState(false);
+
+    const [showPass, setShowPass] = useState({
+        showCurrentPass: false,
+        showNewPass: false,
+        showConfirmPass: false,
+    });
+
+    const currentPassHande = () => {
+        setShowPass({
+            ...showPass,
+            showCurrentPass: !showPass.showCurrentPass,
+        });
+    };
+
+    const newPassHande = () => {
+        setShowPass({
+            ...showPass,
+            showNewPass: !showPass.showNewPass,
+        });
+    };
+
+    const confirmPassHande = () => {
+        setShowPass({
+            ...showPass,
+            showConfirmPass: !showPass.showConfirmPass,
+        });
+    };
 
     const onChange = (event) => {
         const { name, value } = event.target;
@@ -33,21 +64,74 @@ const Profile = ({ auth, isUpdate, changepass }) => {
         ProfileService.updateProfile(currentProfile)
             .then((response) => response.text())
             .then((result) => {
-                console.log(result);
                 let profile = JSON.parse(result);
-                dispatch({ type: UPDATE_PROFILE, profile });
-                console.log("Update profile Successful!");
-                alert("Update profile Successful!");
+                if (profile.message) {
+                    alert("Error: " + profile.message);
+                } else {
+                    dispatch({ type: UPDATE_PROFILE, profile });
+                    setSuccess(true);
+                    alert("Update profile Successful!");
+                }
             })
             .catch((error) => console.log("error", error));
     };
 
-    const noti = () => {
-        alert("successful");
+    var redirect = success ? <Redirect to="/sges/myprofile"></Redirect> : <></>;
+
+    const changePassword = () => {
+        if (checkValidate) {
+            if (checkConfirm) {
+                LoginService.login(currentProfile.username, currentProfile.currentPassword).then(
+                    (response) => {
+                        if (response.status === 500) {
+                            setCurrentProfile({
+                                ...currentProfile,
+                                currentPassword: "",
+                                newPassword: "",
+                                confirmPassword: "",
+                            });
+                            alert("Username or Password incorrect!");
+                        } else if (response.status === 200) {
+                            ProfileService.changePassword(
+                                currentProfile.currentPassword,
+                                currentProfile.newPassword
+                            );
+                            setCurrentProfile({
+                                ...currentProfile,
+                                currentPassword: "",
+                                newPassword: "",
+                                confirmPassword: "",
+                            });
+                            setSuccess(true);
+                            alert("Change password successfully!");
+                        }
+                    }
+                );
+            }
+            if (!checkConfirm) {
+                alert("Confirm password is incorrect !");
+            }
+        }
+        if (!checkValidate) {
+            alert("Pasword fields must not be empty!");
+        }
+    };
+
+    const checkValidate = () => {
+        return currentProfile.newPassword === "" ||
+            currentProfile.newPassword === "" ||
+            currentProfile.confirmPassword === ""
+            ? false
+            : true;
+    };
+
+    const checkConfirm = () => {
+        return currentProfile.newPassword !== currentProfile.confirmPassword ? false : true;
     };
 
     return (
         <div className="profile">
+            {redirect}
             <div className="container">
                 <div className="row m-0 profile-layout">
                     <div className="col-3 py-3 profile-menu">
@@ -136,7 +220,7 @@ const Profile = ({ auth, isUpdate, changepass }) => {
                                         <div
                                             className={
                                                 changepass
-                                                    ? "col-12 left-content"
+                                                    ? "col-10 left-content"
                                                     : "col-8 left-content"
                                             }
                                         >
@@ -152,15 +236,44 @@ const Profile = ({ auth, isUpdate, changepass }) => {
                                                         </label>
                                                     )}
                                                 </div>
-                                                <div className="col-8 content">
+                                                <div
+                                                    className="col-8 content d-flex align-items-center"
+                                                    style={{
+                                                        position: "relative",
+                                                        paddingRight: "0",
+                                                    }}
+                                                >
                                                     {changepass ? (
-                                                        <input
-                                                            type="password"
-                                                            id="currentpass"
-                                                            value={currentProfile.currentPassword}
-                                                            name="currentPassword"
-                                                            onChange={onChange}
-                                                        />
+                                                        <>
+                                                            <input
+                                                                type={
+                                                                    showPass.showCurrentPass ==
+                                                                    false
+                                                                        ? "password"
+                                                                        : "text"
+                                                                }
+                                                                id="currentpass"
+                                                                value={
+                                                                    currentProfile.currentPassword
+                                                                }
+                                                                name="currentPassword"
+                                                                onChange={onChange}
+                                                            />
+                                                            <Link
+                                                                to="#"
+                                                                style={{
+                                                                    position: "absolute",
+                                                                    right: "0",
+                                                                    borderLeft: "1px solid #e4e4e4",
+                                                                    padding: "0 10px",
+                                                                }}
+                                                                onClick={currentPassHande}
+                                                            >
+                                                                <div className="btn">
+                                                                    <BiShow />
+                                                                </div>
+                                                            </Link>
+                                                        </>
                                                     ) : (
                                                         <span>{currentProfile.username}</span>
                                                     )}
@@ -176,15 +289,41 @@ const Profile = ({ auth, isUpdate, changepass }) => {
                                                         <label htmlFor="fullname">Họ và tên</label>
                                                     )}
                                                 </div>
-                                                <div className="col-8 content">
+                                                <div
+                                                    className="col-8 content d-flex align-items-center"
+                                                    style={{
+                                                        position: "relative",
+                                                        paddingRight: "0",
+                                                    }}
+                                                >
                                                     {changepass ? (
-                                                        <input
-                                                            type="password"
-                                                            id="newpass"
-                                                            value={currentProfile.newPassword}
-                                                            name="newPassword"
-                                                            onChange={onChange}
-                                                        />
+                                                        <>
+                                                            <input
+                                                                type={
+                                                                    showPass.showNewPass == false
+                                                                        ? "password"
+                                                                        : "text"
+                                                                }
+                                                                id="newpass"
+                                                                value={currentProfile.newPassword}
+                                                                name="newPassword"
+                                                                onChange={onChange}
+                                                            />
+                                                            <Link
+                                                                to="#"
+                                                                style={{
+                                                                    position: "absolute",
+                                                                    right: "0",
+                                                                    borderLeft: "1px solid #e4e4e4",
+                                                                    padding: "0 10px",
+                                                                }}
+                                                                onClick={newPassHande}
+                                                            >
+                                                                <div className="btn">
+                                                                    <BiShow />
+                                                                </div>
+                                                            </Link>
+                                                        </>
                                                     ) : isUpdate ? (
                                                         <input
                                                             type="text"
@@ -208,15 +347,44 @@ const Profile = ({ auth, isUpdate, changepass }) => {
                                                         <label htmlFor="email">Email</label>
                                                     )}
                                                 </div>
-                                                <div className="col-8 content">
+                                                <div
+                                                    className="col-8 content d-flex align-items-center"
+                                                    style={{
+                                                        position: "relative",
+                                                        paddingRight: "0",
+                                                    }}
+                                                >
                                                     {changepass ? (
-                                                        <input
-                                                            type="password"
-                                                            id="confirmpass"
-                                                            value={currentProfile.confirmPassword}
-                                                            name="confirmPassword"
-                                                            onChange={onChange}
-                                                        />
+                                                        <>
+                                                            <input
+                                                                type={
+                                                                    showPass.showConfirmPass ==
+                                                                    false
+                                                                        ? "password"
+                                                                        : "text"
+                                                                }
+                                                                id="confirmpass"
+                                                                value={
+                                                                    currentProfile.confirmPassword
+                                                                }
+                                                                name="confirmPassword"
+                                                                onChange={onChange}
+                                                            />
+                                                            <Link
+                                                                to="#"
+                                                                style={{
+                                                                    position: "absolute",
+                                                                    right: "0",
+                                                                    borderLeft: "1px solid #e4e4e4",
+                                                                    padding: "0 10px",
+                                                                }}
+                                                                onClick={confirmPassHande}
+                                                            >
+                                                                <div className="btn">
+                                                                    <BiShow />
+                                                                </div>
+                                                            </Link>
+                                                        </>
                                                     ) : isUpdate ? (
                                                         <input
                                                             type="email"
@@ -232,29 +400,49 @@ const Profile = ({ auth, isUpdate, changepass }) => {
                                             </div>
                                             <div className="row d-flex align-items-center pt-4">
                                                 <div className="col-4 label"></div>
-                                                <div className="col-8">
+                                                <div
+                                                    className="col-8"
+                                                    style={{ paddingRight: "0" }}
+                                                >
                                                     {changepass ? (
                                                         <>
                                                             <Link
                                                                 to="changepassword"
                                                                 className="save-btn col-6"
+                                                                onClick={changePassword}
                                                             >
                                                                 <div className="btn">Xác nhận</div>
                                                             </Link>
                                                             <Link to="#" style={{ float: "right" }}>
-                                                                <div className="btn border-0 forget-btn">
+                                                                <div className="btn border-0 forget-btn px-0">
                                                                     Quên mật khẩu?
                                                                 </div>
                                                             </Link>
                                                         </>
                                                     ) : isUpdate ? (
-                                                        <Link
-                                                            to="#"
-                                                            className="save-btn"
-                                                            onClick={updateProfile}
-                                                        >
-                                                            <div className="btn">Lưu</div>
-                                                        </Link>
+                                                        auth.fullName !== currentProfile.fullName ||
+                                                        auth.email !== currentProfile.email ? (
+                                                            <Link
+                                                                to="#"
+                                                                className="save-btn"
+                                                                onClick={updateProfile}
+                                                            >
+                                                                <div className="btn">Lưu</div>
+                                                            </Link>
+                                                        ) : (
+                                                            <Link
+                                                                to="#"
+                                                                className="save-btn"
+                                                                style={{
+                                                                    backgroundColor: "ButtonFace",
+                                                                    cursor: "default",
+                                                                }}
+                                                            >
+                                                                <div className="btn disabled text-dark">
+                                                                    Lưu
+                                                                </div>
+                                                            </Link>
+                                                        )
                                                     ) : (
                                                         <Link
                                                             to="updateprofile"

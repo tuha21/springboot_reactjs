@@ -6,6 +6,7 @@ const initProfile = {
     email: "",
     photo: "",
     status: "",
+    password: "",
 };
 
 const myReducer = (state = initProfile, action) => {

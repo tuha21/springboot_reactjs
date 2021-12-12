@@ -57,11 +57,11 @@ class App extends Component {
                     let auth = {
                         id: user.id,
                         username: user.username,
-                        password: user.password,
+                        fullName: user.fullName,
+                        email: user.email,
                         roles: user.roles,
                     };
                     this.props.setAuth(auth);
-                    this.props.setCart([]);
                 })
                 .catch((error) => console.log("error", error));
         }
@@ -72,7 +72,7 @@ class App extends Component {
         return (
             <Router>
                 <Route path="/sges">
-                    <NavTop isStaff={this.isStaff} isAdmin={this.isAdmin} auth={auth} />
+                    <NavTop isStaff={this.isStaff} isAdmin={this.isAdmin} />
                     <Route exact path="/sges">
                         <Home />
                     </Route>

@@ -132,7 +132,7 @@ public class LoginController {
 		String username= jwtHelper.getUsernameFromJwt(jwt);
 		Account account;
 		if (result.hasErrors()) {
-			return new ResponseEntity<>("Email address invalid!", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new MessageResponse("Email address invalid!"), HttpStatus.BAD_REQUEST);
 		}
 		try {
 			account = accountRepo.findByUsername(username);

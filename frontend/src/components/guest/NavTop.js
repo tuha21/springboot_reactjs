@@ -2,8 +2,16 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import "../../App.css";
 import { FaUserCircle } from "react-icons/fa";
+import ProfileService from "../../services/guestservice/ProfileService";
+import { connect } from "react-redux";
+import * as action from "../../actions";
 
 class NavTop extends Component {
+    logout = () => {
+        ProfileService.logout();
+        this.props.setAuth(null);
+    };
+
     render() {
         return (
             <div>
@@ -11,6 +19,13 @@ class NavTop extends Component {
                     <div className="row m-0">
                         <div className="col-6"></div>
                         <div className="col-6 text-center d-flex justify-content-center align-items-center">
+                            {this.props.auth &&
+                            (this.props.isStaff(this.props.auth.roles) ||
+                                this.props.isStaff(this.props.auth.roles)) ? (
+                                <Link to="/staff">
+                                    <div className="btn">Quản lý cửa hàng</div>
+                                </Link>
+                            ) : null}
                             {this.props.auth ? (
                                 <div className="dropdown px-3">
                                     <Link
@@ -37,7 +52,19 @@ class NavTop extends Component {
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link className="dropdown-item" to="#">
+                                            <Link className="dropdown-item" to="/sges/myorder">
+                                                Đơn mua
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <dir className="dropdown-divider"></dir>
+                                        </li>
+                                        <li>
+                                            <Link
+                                                className="dropdown-item text-danger"
+                                                to="#"
+                                                onClick={this.logout}
+                                            >
                                                 Đăng xuất
                                             </Link>
                                         </li>
@@ -95,26 +122,6 @@ class NavTop extends Component {
                                     Địa chỉ
                                 </Link>
                             </li>
-                            {this.props.auth !== null ? (
-                                <li className="nav-item">
-                                    <Link className="nav-link ms-4 me-4" to="/sges/myorder">
-                                        Orders
-                                    </Link>
-                                </li>
-                            ) : (
-                                <></>
-                            )}
-                            {this.props.auth !== null &&
-                            (this.props.isAdmin(this.props.auth.roles) ||
-                                this.props.isStaff(this.props.auth.roles)) ? (
-                                <li className="nav-item">
-                                    <Link className="nav-link ms-4 me-4" to="/staff">
-                                        Quản lý
-                                    </Link>
-                                </li>
-                            ) : (
-                                <></>
-                            )}
                         </ul>
                     </div>
                     <button
@@ -134,4 +141,18 @@ class NavTop extends Component {
     }
 }
 
-export default NavTop;
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setAuth: (auth) => {
+            dispatch(action.setAuth(auth));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavTop);
