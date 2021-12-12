@@ -2,23 +2,48 @@ import React, { useState } from "react";
 import "../../css/profile.css";
 import { Link } from "react-router-dom";
 import { RiUserLine, RiFileList3Line } from "react-icons/ri";
+import moduleName from "../../services/guestservice/ProfileService";
+import { useDispatch, useSelector } from "react-redux";
+import { UPDATE_PROFILE } from "./../../constants/constants";
+import ProfileService from "../../services/guestservice/ProfileService";
 
 const Profile = ({ auth, isUpdate, changepass }) => {
-    const [profile, setProfile] = useState({
+    const profile = useSelector((state) => state.profile);
+    const dispatch = useDispatch();
+
+    const [currentProfile, setCurrentProfile] = useState({
         username: auth.username,
         email: auth.email,
         fullName: auth.fullName,
         currentPassword: "",
         newPassword: "",
         confirmPassword: "",
+        hidden: false,
     });
 
     const onChange = (event) => {
         const { name, value } = event.target;
-        setProfile({
-            ...profile,
+        setCurrentProfile({
+            ...currentProfile,
             [name]: value,
         });
+    };
+
+    const updateProfile = () => {
+        ProfileService.updateProfile(currentProfile)
+            .then((response) => response.text())
+            .then((result) => {
+                console.log(result);
+                let profile = JSON.parse(result);
+                dispatch({ type: UPDATE_PROFILE, profile });
+                console.log("Update profile Successful!");
+                alert("Update profile Successful!");
+            })
+            .catch((error) => console.log("error", error));
+    };
+
+    const noti = () => {
+        alert("successful");
     };
 
     return (
@@ -132,12 +157,12 @@ const Profile = ({ auth, isUpdate, changepass }) => {
                                                         <input
                                                             type="password"
                                                             id="currentpass"
-                                                            value={profile.currentPassword}
+                                                            value={currentProfile.currentPassword}
                                                             name="currentPassword"
                                                             onChange={onChange}
                                                         />
                                                     ) : (
-                                                        <span>{profile.username}</span>
+                                                        <span>{currentProfile.username}</span>
                                                     )}
                                                 </div>
                                             </div>
@@ -156,7 +181,7 @@ const Profile = ({ auth, isUpdate, changepass }) => {
                                                         <input
                                                             type="password"
                                                             id="newpass"
-                                                            value={profile.newPassword}
+                                                            value={currentProfile.newPassword}
                                                             name="newPassword"
                                                             onChange={onChange}
                                                         />
@@ -164,12 +189,12 @@ const Profile = ({ auth, isUpdate, changepass }) => {
                                                         <input
                                                             type="text"
                                                             id="fullname"
-                                                            value={profile.fullName}
+                                                            value={currentProfile.fullName}
                                                             name="fullName"
                                                             onChange={onChange}
                                                         />
                                                     ) : (
-                                                        <span>{profile.fullName}</span>
+                                                        <span>{currentProfile.fullName}</span>
                                                     )}
                                                 </div>
                                             </div>
@@ -188,7 +213,7 @@ const Profile = ({ auth, isUpdate, changepass }) => {
                                                         <input
                                                             type="password"
                                                             id="confirmpass"
-                                                            value={profile.confirmPassword}
+                                                            value={currentProfile.confirmPassword}
                                                             name="confirmPassword"
                                                             onChange={onChange}
                                                         />
@@ -196,12 +221,12 @@ const Profile = ({ auth, isUpdate, changepass }) => {
                                                         <input
                                                             type="email"
                                                             id="email"
-                                                            value={profile.email}
+                                                            value={currentProfile.email}
                                                             name="email"
                                                             onChange={onChange}
                                                         />
                                                     ) : (
-                                                        <span>{profile.email}</span>
+                                                        <span>{currentProfile.email}</span>
                                                     )}
                                                 </div>
                                             </div>
@@ -223,7 +248,11 @@ const Profile = ({ auth, isUpdate, changepass }) => {
                                                             </Link>
                                                         </>
                                                     ) : isUpdate ? (
-                                                        <Link to="myprofile" className="save-btn">
+                                                        <Link
+                                                            to="#"
+                                                            className="save-btn"
+                                                            onClick={updateProfile}
+                                                        >
                                                             <div className="btn">Lưu</div>
                                                         </Link>
                                                     ) : (

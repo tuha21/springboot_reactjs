@@ -8,6 +8,7 @@ import com.fpt.dto.request.ChangePassword;
 import com.fpt.dto.request.ChangeProfile;
 import com.fpt.dto.request.Signup;
 import com.fpt.dto.response.MessageResponse;
+import com.fpt.dto.response.ProfileResponse;
 import com.fpt.entity.Account;
 import com.fpt.entity.AuthProvider;
 import com.fpt.jwt.JwtHelper;
@@ -142,10 +143,10 @@ public class LoginController {
 		}
 		try {
 			account = accountRepo.findByUsername(username);
-            if (changeProfile.getEmail() == null) {
+            if (changeProfile.getEmail() == null || changeProfile.getEmail().equals("")) {
                 return new ResponseEntity<>(new MessageResponse("Email cannot be blank!"), HttpStatus.BAD_REQUEST);
             }
-            if (changeProfile.getFullname() == null) {
+            if (changeProfile.getFullname() == null || changeProfile.getFullname().equals("")) {
                 return new ResponseEntity<>(new MessageResponse("Fullname cannot be blank!"), HttpStatus.BAD_REQUEST);
             }
 			if (changeProfile.getEmail().equals(account.getEmail())){
@@ -161,7 +162,8 @@ public class LoginController {
 			account.setEmail(changeProfile.getEmail());
 			account.setPhoto(changeProfile.getPhoto());
 			accountRepo.save(account);
-			return new ResponseEntity<>(new MessageResponse("Account update successful!"), HttpStatus.OK);
+			var profileResponse = new ProfileResponse(account.getId(), account.getUsername(), account.getFullname(), account.getEmail(),account.getPhoto(),account.getStatus());
+			return new ResponseEntity<>(profileResponse, HttpStatus.OK);
 		} catch (UsernameNotFoundException e){
 			return new ResponseEntity<>(new MessageResponse(e.getMessage()),HttpStatus.NOT_FOUND);
 		}

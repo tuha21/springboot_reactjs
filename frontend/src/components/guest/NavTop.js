@@ -20,7 +20,7 @@ class NavTop extends Component {
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
                                     >
-                                        <div className="btn p-0">
+                                        <div className="btn px-0">
                                             <FaUserCircle />
                                             <span style={{ paddingLeft: "10px" }}>
                                                 {this.props.auth.username || "username"}
