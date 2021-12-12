@@ -18,8 +18,8 @@ public class OrdController {
     OrderService orderService;
 
     @GetMapping("")
-    public ResponseEntity<List<OrderDTO>> findByAccount (@RequestParam("username") String username, @RequestParam("password") String paswword) {
-        List<OrderDTO> list = this.orderService.findByAccount(username, paswword);
+    public ResponseEntity<List<OrderDTO>> findByAccount (@RequestParam("username") String username) {
+        List<OrderDTO> list = this.orderService.findByAccount(username);
         if(!list.isEmpty()) {
             return new ResponseEntity<List<OrderDTO>>(list, HttpStatus.OK);
         }

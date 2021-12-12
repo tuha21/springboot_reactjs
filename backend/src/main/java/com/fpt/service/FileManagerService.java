@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 
-@Service
+
 public interface FileManagerService {
 	
 	public File save(MultipartFile file);

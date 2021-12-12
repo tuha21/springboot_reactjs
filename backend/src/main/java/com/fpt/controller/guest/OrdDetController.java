@@ -39,4 +39,9 @@ public class OrdDetController {
         return new ResponseEntity<OrderDetailDTO>(dto.get(), HttpStatus.OK);
     }
 
+    @GetMapping("/guest/orderdetail/{id}")
+    public ResponseEntity<OrderDetail> findByOrderId(@PathVariable(value = "id") Integer id){
+        Optional<OrderDetailDTO> orderDetailDTO = Optional.ofNullable(this.orderDetailService.findByOrderId(id));
+        return new ResponseEntity<OrderDetail>(orderDetailDTO.get(),HttpStatus.OK);
+    }
 }

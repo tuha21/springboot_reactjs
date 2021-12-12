@@ -1,7 +1,7 @@
 import { Component } from "react"
 import LoginService from "../../services/loginservice/LoginService";
 import * as action from "../../actions";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 class Login extends Component {
 
@@ -49,16 +49,34 @@ class Login extends Component {
                 return response.text();
             })
             .then(result => {
-                console.log(result)
-                let user = JSON.parse(result)
-                let auth = {
-                    id: user.id,
-                    username: user.username,
-                    password: user.password,
-                    roles: user.roles
-                }
-                this.props.setAuth(auth);
-                this.props.setCart([])
+                localStorage.setItem('token', result)
+                var myHeaders = new Headers();
+                myHeaders.append("Authorization", "Bearer " + result);
+                myHeaders.append("Cookie", "JSESSIONID=C6B69B1366935F0C4E7CCAC8732291BA");
+
+                var requestOptions = {
+                    method: 'GET',
+                    headers: myHeaders,
+                    redirect: 'follow'
+                };
+
+                fetch("http://localhost:8080/getProfile", requestOptions)
+                    .then(response => response.text())
+                    .then(result => {
+                        console.log(result)
+                        let user = JSON.parse(result)
+                        let auth = {
+                            username: user.username,
+                            fullName: user.fullName,
+                            email: user.email,
+                            photo: user.photo,
+                            roles: user.roles
+                        }
+                        this.props.setAuth(auth);
+                        console.log("auth",auth);
+                        this.props.setCart([])
+                    })
+                    .catch(error => console.log('error', error));
             })
             .catch(error => console.log('error', error));
     }
@@ -73,19 +91,19 @@ class Login extends Component {
                 <div className='col'></div>
                 <div className='col'>
                     <div className='p-5'>
-                        <h3>Login</h3>
+                        <h3>Đăng nhập</h3>
                         <form className='mt-3' onSubmit={this.onSubmit}>
                             <div className="mb-3">
-                                <label>Username</label>
-                                <input className="form-control border border-3 rounded-0" type="text" name="username" onChange={this.onChangeHand} placeholder="enter username here" />
+                                <label>Tài khản</label>
+                                <input className="form-control border border-3 rounded-0" type="text" name="username" onChange={this.onChangeHand} placeholder="Nhập tài khoản" />
                             </div>
                             <div className="mb-3">
-                                <label>Password</label>
-                                <input className="form-control border border-3 rounded-0" type="password" name="password" onChange={this.onChangeHand} placeholder="enter password here" />
+                                <label>Mật khẩu</label>
+                                <input className="form-control border border-3 rounded-0" type="password" name="password" onChange={this.onChangeHand} placeholder="Nhập mật khẩu" />
                             </div>
                             {alert}
                             <button className="mt-3 p-0 pt-2 btn w-100 rounded-0" style={{ backgroundColor: '#A3C7BD' }}>
-                                <h5 style={{ color: 'white' }}>Sign in</h5>
+                                <h5 style={{ color: 'white' }}>Đăng nhập</h5>
                             </button>
                         </form>
                     </div>
@@ -99,7 +117,7 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        auth : state.auth
+        auth: state.auth
     }
 }
 
@@ -114,4 +132,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

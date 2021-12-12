@@ -15,6 +15,7 @@ import CategoryIndex from './categorys/CategoryIndex';
 import { Link, Route } from 'react-router-dom';
 import Authorized from '../admin/Authorized';
 import OrderList from './orders/OrderList';
+import { connect } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -72,6 +73,7 @@ function Dashboard(props) {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
+  const { auth } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -80,14 +82,14 @@ function Dashboard(props) {
 
 
   const isAdmin = (roles) => {
-    if(roles && roles.includes(1)){
+    if (roles && roles.includes(1)) {
       return true;
     }
     else return false
   }
 
   const isStaff = (roles) => {
-    if(roles &&roles.includes(2)){
+    if (roles && roles.includes(2)) {
       return true;
     }
     else return false
@@ -96,10 +98,17 @@ function Dashboard(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar}>
-        <Typography className="p-3" style={{ color: 'white'}}>M E X X I</Typography>
+        <Typography className="p-3" style={{ color: 'white' }}>S G E S</Typography>
       </div>
       <hr></hr>
       <List>
+
+        <Link className={classes.links} to="/sges">
+          <ListItem button>
+            <i className="bi bi-house-door-fill me-2"></i>
+            <ListItemText primary="Home" />
+          </ListItem>
+        </Link>
         {['Product', 'Category', 'Order'].map((text, index) => (
           <Link key={index} className={classes.links} to={"/staff/" + text.toLowerCase()}>
             <ListItem button key={text}>
@@ -110,18 +119,12 @@ function Dashboard(props) {
         ))}
         {
           isAdmin(props.auth.roles) ? <Link className={classes.links} to="/staff/Adminstrator">
-          <ListItem button>
-            <i className="bi bi-house-door-fill me-2"></i>
-            <ListItemText primary="Adminstrator" />
-          </ListItem>
-        </Link> : <></>
+            <ListItem button>
+              <i className="bi bi-house-door-fill me-2"></i>
+              <ListItemText primary="Adminstrator" />
+            </ListItem>
+          </Link> : <></>
         }
-        <Link className={classes.links} to="/mexxi">
-          <ListItem button>
-            <i className="bi bi-house-door-fill me-2"></i>
-            <ListItemText primary="Home" />
-          </ListItem>
-        </Link>
       </List>
       <hr></hr>
     </div>
@@ -134,9 +137,17 @@ function Dashboard(props) {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar style={{ backgroundColor: 'white', color: '#353A40' }}>
-          <Typography variant="h6" noWrap>
-            Dashboard
-          </Typography>
+          <div className="row w-100">
+            <Typography variant="h6" noWrap className="col-6">
+              Dashboard
+            </Typography>
+            <div className="col-6 d-flex justify-content-end">
+              <img src="https://static-s.aa-cdn.net/img/ios/1109277833/0df781f42d16c739d841831e462bc99e" width="30" height="30" className="d-inline-block align-top mx-2" alt="avatar" style={{borderRadius: '50px', border: '1px solid'}} />
+              <Typography variant="h5" noWrap>
+                {auth.fullName}
+              </Typography>
+            </div>
+          </div>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -178,10 +189,10 @@ function Dashboard(props) {
           <CategoryIndex />
         </Route>
         <Route exact path="/staff/Adminstrator">
-            <Authorized/>
+          <Authorized />
         </Route>
         <Route exact path="/staff/Order">
-            <OrderList/>
+          <OrderList />
         </Route>
       </main>
     </div>
@@ -192,4 +203,10 @@ Dashboard.propTypes = {
   window: PropTypes.func,
 };
 
-export default Dashboard;
+const mapStateToProps = state => {
+  return {
+      auth: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(Dashboard);
