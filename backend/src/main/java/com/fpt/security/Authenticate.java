@@ -1,6 +1,9 @@
 package com.fpt.security;
 
+import com.fpt.jwt.JwtConfigurer;
 import com.fpt.jwt.JwtTokenFilter;
+import com.fpt.security.auth2.CustomOAuth2UserService;
+import com.fpt.security.auth2.OAuth2AuthenticationSuccessHandler;
 import com.fpt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true,jsr250Enabled = true)
 public class Authenticate extends WebSecurityConfigurerAdapter{
 
 	@Bean
@@ -29,7 +32,16 @@ public class Authenticate extends WebSecurityConfigurerAdapter{
 	UserService userService;
 
 	@Autowired
+	CustomOAuth2UserService oAuth2UserService;
+
+	@Autowired
+	OAuth2AuthenticationSuccessHandler oauthSuccessHandler;
+
+	@Autowired
 	private JwtTokenFilter jwtTokenFilter;
+
+	@Autowired
+	private JwtConfigurer jwtConfigurer;
 
 	@Bean(BeanIds.AUTHENTICATION_MANAGER)
 	@Override
@@ -50,10 +62,22 @@ public class Authenticate extends WebSecurityConfigurerAdapter{
 		.csrf()
 		.disable()
         .authorizeRequests()
-//        .antMatchers("/admin/**").hasRole("ADMIN")
-//        .antMatchers("/staff/**").hasAnyRole("STAFF", "ADMIN")
-//				.antMatchers("/guest/order/**").authenticated()
-        .anyRequest().permitAll();
+        .antMatchers("/admin/**").hasRole("ADMIN")
+        .antMatchers("/staff/**").hasAnyRole("STAFF", "ADMIN")
+				.antMatchers("/guest/order/**").authenticated()
+//				.anyRequest().permitAll();
+        .anyRequest().permitAll()
+
+		// oauth2
+				.and()
+				.oauth2Login()
+				.authorizationEndpoint().baseUri("/oauth2/authorize")
+				.and()
+				.userInfoEndpoint().userService(oAuth2UserService)
+				.and()
+				.successHandler(oauthSuccessHandler)
+				.and()
+				.apply(jwtConfigurer);
 		http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 }

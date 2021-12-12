@@ -10,6 +10,7 @@ import com.fpt.dto.request.Signup;
 import com.fpt.dto.response.MessageResponse;
 import com.fpt.dto.response.ProfileResponse;
 import com.fpt.entity.Account;
+import com.fpt.entity.AuthProvider;
 import com.fpt.jwt.JwtHelper;
 import com.fpt.repo.AccountRepo;
 import com.fpt.service.AccountService;
@@ -78,6 +79,7 @@ public class LoginController {
 				signup.getPhoto(),
 				signup.getStatus()
 				);
+		account.setProvider(AuthProvider.LOCAL);
 		accountRepo.save(account);
 		return new ResponseEntity<>("Account registered successfully!",HttpStatus.OK);
 	}
@@ -99,6 +101,11 @@ public class LoginController {
 		profile.setRoles(roles);
 		return new ResponseEntity<>(profile, HttpStatus.OK);
 	}
+
+//	@GetMapping("/getFile")
+//	public ResponseEntity<Object> getFile(HttpServletRequest request){
+//		String jwt = jwtHelper.parseJwt(request);
+//	}
 
 	@PutMapping("/changePassword")
 	public ResponseEntity<Object> changePassword(HttpServletRequest request, @Valid @RequestBody ChangePassword changePassword){
