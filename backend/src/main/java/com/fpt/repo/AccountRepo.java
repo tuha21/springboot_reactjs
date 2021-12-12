@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AccountRepo extends JpaRepository<Account, Integer>{
@@ -23,4 +24,6 @@ public interface AccountRepo extends JpaRepository<Account, Integer>{
 	boolean existsByEmail(String email);
 
 	boolean existsByUsername(String username);
+
+	Account findByEmail(String email);
 }

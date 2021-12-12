@@ -4,7 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpt.dto.CustomUserDetail;
 import io.jsonwebtoken.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -13,11 +20,15 @@ import java.util.Date;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class JwtHelper {
+    @Qualifier("userDetailServiceImpl")
+    @Autowired UserDetailsService userDetailsService;
 
     private final String JWT_SECRET = "sapoooooo";
 
     private final long JWT_EXPIRATION = 604800000L;
+
 
     public String generateTJwtToken(CustomUserDetail customUserDetail) throws JsonProcessingException {
         Date now = new Date();
@@ -30,6 +41,25 @@ public class JwtHelper {
                 .setExpiration(exp)
                 .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
                 .claim("user", json)
+                .compact();
+    }
+
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsernameFromJwt(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    public String createToken(String username, String role) {
+        Claims claims = Jwts.claims().setSubject(username);
+        claims.put("role", role);
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + JWT_EXPIRATION);
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(validity)
+                .signWith(SignatureAlgorithm.HS256, JWT_SECRET)
                 .compact();
     }
 

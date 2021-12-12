@@ -3,6 +3,7 @@ package com.fpt.service;
 import com.fpt.dto.AccountDTO;
 import com.fpt.dto.UserDetail;
 import com.fpt.entity.Account;
+import com.fpt.security.auth2.OAuth2UserInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,4 +26,9 @@ public interface AccountService {
 	public Account findActiveByUsername(String username);
 	
 	public UserDetail findByUsernameAndPassword(String username, String password);
+
+	Account registerOauth2User(String provider, OAuth2UserInfo oAuth2UserInfo);
+
+	Account updateOauth2User(Account user, String provider, OAuth2UserInfo oAuth2UserInfo);
+
 }

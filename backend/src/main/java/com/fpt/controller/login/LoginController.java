@@ -99,6 +99,11 @@ public class LoginController {
 		return new ResponseEntity<>(profile, HttpStatus.OK);
 	}
 
+//	@GetMapping("/getFile")
+//	public ResponseEntity<Object> getFile(HttpServletRequest request){
+//		String jwt = jwtHelper.parseJwt(request);
+//	}
+
 	@PutMapping("/changePassword")
 	public ResponseEntity<Object> changePassword(HttpServletRequest request, @Valid @RequestBody ChangePassword changePassword){
 		String jwt = jwtHelper.parseJwt(request);
