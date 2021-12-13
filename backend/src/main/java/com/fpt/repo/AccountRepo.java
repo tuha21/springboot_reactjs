@@ -1,6 +1,7 @@
 package com.fpt.repo;
 
 import com.fpt.entity.Account;
+import com.fpt.entity.AuthProvider;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,4 +27,6 @@ public interface AccountRepo extends JpaRepository<Account, Integer>{
 	boolean existsByUsername(String username);
 
 	Account findByEmail(String email);
+
+	Account findByEmailAndProvider(String email, AuthProvider provider);
 }

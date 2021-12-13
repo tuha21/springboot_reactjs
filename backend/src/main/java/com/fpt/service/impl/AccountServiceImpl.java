@@ -93,11 +93,11 @@ public class AccountServiceImpl implements AccountService{
 		account.setFullname(oAuth2UserInfo.getName());
 		account.setPhoto(oAuth2UserInfo.getImageUrl());
 		account.setProvider(AuthProvider.valueOf(provider.toUpperCase()));
-//		String username = oAuth2UserInfo.getEmail();
-//		String[] username1 = username.split("@");
-//		String username2= username1[0];
-//		account.setUsername(username2);
-		account.setUsername(oAuth2UserInfo.getEmail());
+		String username = oAuth2UserInfo.getEmail();
+		String[] username1 = username.split("@");
+		String username2= username1[0];
+		account.setUsername(username2);
+//		account.setUsername(oAuth2UserInfo.getEmail());
 		account.setStatus(1);
 		return accountRepo.save(account);
 	}
@@ -107,11 +107,11 @@ public class AccountServiceImpl implements AccountService{
 		account.setFullname(oAuth2UserInfo.getName());
 		account.setPhoto(oAuth2UserInfo.getImageUrl());
 		account.setProvider(AuthProvider.valueOf(provider.toUpperCase()));
-//		String username = oAuth2UserInfo.getEmail();
-//		String[] username1 = username.split("@");
-//		String username2= username1[0];
-//		account.setUsername(username2);
-		account.setUsername(oAuth2UserInfo.getEmail());
+		String username = oAuth2UserInfo.getEmail();
+		String[] username1 = username.split("@");
+		String username2= username1[0];
+		account.setUsername(username2);
+//		account.setUsername(oAuth2UserInfo.getEmail());
 		return accountRepo.save(account);
 	}
 }

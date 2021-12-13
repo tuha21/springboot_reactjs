@@ -22,8 +22,6 @@ import java.util.Date;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtHelper {
-    @Qualifier("userDetailServiceImpl")
-    @Autowired UserDetailsService userDetailsService;
 
     private final String JWT_SECRET = "sapoooooo";
 
@@ -44,10 +42,6 @@ public class JwtHelper {
                 .compact();
     }
 
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsernameFromJwt(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }
 
     public String createToken(String username, String role) {
         Claims claims = Jwts.claims().setSubject(username);
